@@ -1,0 +1,17 @@
+# Postgresql hooks documentation
+
+Provide description here.
+
+{% for section in sections -%}
+* [{{ section.name }}](#{{ section.slug }})
+{% endfor %}
+
+{% for section in sections -%}
+## [{{ section.name }}](Detailed#{{ section.slug }})
+
+Provide description here.
+
+{% for hook in section.hooks -%}
+* [{{ hook.name }}](Detailed#{{ hook.name }}) — ...
+{% endfor %}
+{% endfor %}
