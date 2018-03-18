@@ -257,137 +257,137 @@ sections = [
             Hook(
                 needs_fmgr_hook_type,
                 'needs_fmgr_hook',
-                link('src/include/fmgr.h')
+                link('src/include/fmgr.h#L727')
             ),
             Hook(
                 fmgr_hook_type,
                 'fmgr_hook',
-                link('src/include/fmgr.h')
+                link('src/include/fmgr.h#L728')
             ),
             Hook(
                 object_access_hook_type,
                 'object_access_hook',
-                link('src/include/catalog/objectaccess.h')
+                link('src/include/catalog/objectaccess.h#L127')
             ),
             Hook(
                 ExplainOneQuery_hook_type,
                 'ExplainOneQuery_hook',
-                link('src/include/commands/explain.h')
+                link('src/include/commands/explain.h#L58')
             ),
             Hook(
                 explain_get_index_name_hook_type,
                 'explain_get_index_name_hook',
-                link('src/include/commands/explain.h')
+                link('src/include/commands/explain.h#L62')
             ),
             Hook(
                 check_password_hook_type,
                 'check_password_hook',
-                link('src/include/commands/user.h')
+                link('src/include/commands/user.h#L25')
             ),
             Hook(
                 ExecutorStart_hook_type,
                 'ExecutorStart_hook',
-                link('src/include/executor/executor.h')
+                link('src/include/executor/executor.h#L71')
             ),
             Hook(
                 ExecutorRun_hook_type,
                 'ExecutorRun_hook',
-                link('src/include/executor/executor.h')
+                link('src/include/executor/executor.h#L78')
             ),
             Hook(
                 ExecutorFinish_hook_type,
                 'ExecutorFinish_hook',
-                link('src/include/executor/executor.h')
+                link('src/include/executor/executor.h#L82')
             ),
             Hook(
                 ExecutorEnd_hook_type,
                 'ExecutorEnd_hook',
-                link('src/include/executor/executor.h')
+                link('src/include/executor/executor.h#L86')
             ),
             Hook(
                 ExecutorCheckPerms_hook_type,
                 'ExecutorCheckPerms_hook',
-                link('src/include/executor/executor.h')
+                link('src/include/executor/executor.h#L90')
             ),
             Hook(
                 ClientAuthentication_hook_type,
                 'ClientAuthentication_hook',
-                link('src/include/libpq/auth.h')
+                link('src/include/libpq/auth.h#L27')
             ),
             Hook(
                 set_rel_pathlist_hook_type,
                 'set_rel_pathlist_hook',
-                link('src/include/optimizer/paths.h')
+                link('src/include/optimizer/paths.h#L33')
             ),
             Hook(
                 set_join_pathlist_hook_type,
                 'set_join_pathlist_hook',
-                link('src/include/optimizer/paths.h')
+                link('src/include/optimizer/paths.h#L42')
             ),
             Hook(
                 join_search_hook_type,
                 'join_search_hook',
-                link('src/include/optimizer/paths.h')
+                link('src/include/optimizer/paths.h#L48')
             ),
             Hook(
                 get_relation_info_hook_type,
                 'get_relation_info_hook',
-                link('src/include/optimizer/plancat.h')
+                link('src/include/optimizer/plancat.h#L25')
             ),
             Hook(
                 planner_hook_type,
                 'planner_hook',
-                link('src/include/optimizer/planner.h')
+                link('src/include/optimizer/planner.h#L25')
             ),
             Hook(
                 create_upper_paths_hook_type,
                 'create_upper_paths_hook',
-                link('src/include/optimizer/planner.h')
+                link('src/include/optimizer/planner.h#L32')
             ),
             Hook(
                 post_parse_analyze_hook_type,
                 'post_parse_analyze_hook',
-                link('src/include/parser/analyze.h')
+                link('src/include/parser/analyze.h#L22')
             ),
             Hook(
                 row_security_policy_hook_type,
                 'row_security_policy_hook_permissive',
-                link('src/include/rewrite/rowsecurity.h')
+                link('src/include/rewrite/rowsecurity.h#L40')
             ),
             Hook(
                 row_security_policy_hook_type,
                 'row_security_policy_hook_restrictive',
-                link('src/include/rewrite/rowsecurity.h')
+                link('src/include/rewrite/rowsecurity.h#L42')
             ),
             Hook(
                 shmem_startup_hook_type,
                 'shmem_startup_hook',
-                link('src/include/storage/ipc.h')
+                link('src/include/storage/ipc.h#L77')
             ),
             Hook(
                 ProcessUtility_hook_type,
                 'ProcessUtility_hook',
-                link('src/include/tcop/utility.h')
+                link('src/include/tcop/utility.h#L32')
             ),
             Hook(
                 emit_log_hook_type,
                 'emit_log_hook',
-                link('src/include/utils/elog.h')
+                link('src/include/utils/elog.h#L375')
             ),
             Hook(
                 get_attavgwidth_hook_type,
                 'get_attavgwidth_hook',
-                link('src/include/utils/lsyscache.h')
+                link('src/include/utils/lsyscache.h#L62')
             ),
             Hook(
                 get_relation_stats_hook_type,
                 'get_relation_stats_hook',
-                link('src/include/utils/selfuncs.h')
+                link('src/include/utils/selfuncs.h#L146')
             ),
             Hook(
                 get_index_stats_hook_type,
                 'get_index_stats_hook',
-                link('src/include/utils/selfuncs.h')
+                link('src/include/utils/selfuncs.h#L151')
             )
         ]
     )

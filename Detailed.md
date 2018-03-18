@@ -10,7 +10,7 @@ Provide description here.
 Provide description here.
 
 
-<a name="needs_fmgr_hook" href="#needs_fmgr_hook">#</a> <i>bool</i> <b>needs_fmgr_hook</b>(fn_oid) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h "Source")
+<a name="needs_fmgr_hook" href="#needs_fmgr_hook">#</a> <i>bool</i> <b>needs_fmgr_hook</b>(fn_oid) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L727 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -35,7 +35,7 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="fmgr_hook" href="#fmgr_hook">#</a> <i>void</i> <b>fmgr_hook</b>(event, flinfo, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h "Source")
+<a name="fmgr_hook" href="#fmgr_hook">#</a> <i>void</i> <b>fmgr_hook</b>(event, flinfo, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L728 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -61,7 +61,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="object_access_hook" href="#object_access_hook">#</a> <i>void</i> <b>object_access_hook</b>(access, classId, objectId, subId, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/catalog/objectaccess.h "Source")
+<a name="object_access_hook" href="#object_access_hook">#</a> <i>void</i> <b>object_access_hook</b>(access, classId, objectId, subId, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/catalog/objectaccess.h#L127 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -89,7 +89,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="ExplainOneQuery_hook" href="#ExplainOneQuery_hook">#</a> <i>void</i> <b>ExplainOneQuery_hook</b>(query, cursorOptions, into, es, queryString, params, queryEnv) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h "Source")
+<a name="ExplainOneQuery_hook" href="#ExplainOneQuery_hook">#</a> <i>void</i> <b>ExplainOneQuery_hook</b>(query, cursorOptions, into, es, queryString, params, queryEnv) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h#L58 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -119,7 +119,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="explain_get_index_name_hook" href="#explain_get_index_name_hook">#</a> <i>const char *</i> <b>explain_get_index_name_hook</b>(indexId) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h "Source")
+<a name="explain_get_index_name_hook" href="#explain_get_index_name_hook">#</a> <i>const char *</i> <b>explain_get_index_name_hook</b>(indexId) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h#L62 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -144,7 +144,7 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="check_password_hook" href="#check_password_hook">#</a> <i>void</i> <b>check_password_hook</b>(username, shadow_pass, password_type, validuntil_time, validuntil_null) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/user.h "Source")
+<a name="check_password_hook" href="#check_password_hook">#</a> <i>void</i> <b>check_password_hook</b>(username, shadow_pass, password_type, validuntil_time, validuntil_null) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/user.h#L25 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -172,7 +172,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="ExecutorStart_hook" href="#ExecutorStart_hook">#</a> <i>void</i> <b>ExecutorStart_hook</b>(queryDesc, eflags) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h "Source")
+<a name="ExecutorStart_hook" href="#ExecutorStart_hook">#</a> <i>void</i> <b>ExecutorStart_hook</b>(queryDesc, eflags) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L71 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -197,7 +197,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="ExecutorRun_hook" href="#ExecutorRun_hook">#</a> <i>void</i> <b>ExecutorRun_hook</b>(queryDesc, direction, count, execute_once) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h "Source")
+<a name="ExecutorRun_hook" href="#ExecutorRun_hook">#</a> <i>void</i> <b>ExecutorRun_hook</b>(queryDesc, direction, count, execute_once) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L78 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -224,7 +224,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="ExecutorFinish_hook" href="#ExecutorFinish_hook">#</a> <i>void</i> <b>ExecutorFinish_hook</b>(queryDesc) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h "Source")
+<a name="ExecutorFinish_hook" href="#ExecutorFinish_hook">#</a> <i>void</i> <b>ExecutorFinish_hook</b>(queryDesc) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L82 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -248,7 +248,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="ExecutorEnd_hook" href="#ExecutorEnd_hook">#</a> <i>void</i> <b>ExecutorEnd_hook</b>(queryDesc) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h "Source")
+<a name="ExecutorEnd_hook" href="#ExecutorEnd_hook">#</a> <i>void</i> <b>ExecutorEnd_hook</b>(queryDesc) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L86 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -272,7 +272,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="ExecutorCheckPerms_hook" href="#ExecutorCheckPerms_hook">#</a> <i>bool</i> <b>ExecutorCheckPerms_hook</b>(*, bool) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h "Source")
+<a name="ExecutorCheckPerms_hook" href="#ExecutorCheckPerms_hook">#</a> <i>bool</i> <b>ExecutorCheckPerms_hook</b>(*, bool) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L90 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -298,7 +298,7 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="ClientAuthentication_hook" href="#ClientAuthentication_hook">#</a> <i>void</i> <b>ClientAuthentication_hook</b>(*, int) [<>](https://github.com/postgres/postgres/blob/master/src/include/libpq/auth.h "Source")
+<a name="ClientAuthentication_hook" href="#ClientAuthentication_hook">#</a> <i>void</i> <b>ClientAuthentication_hook</b>(*, int) [<>](https://github.com/postgres/postgres/blob/master/src/include/libpq/auth.h#L27 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -323,7 +323,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="set_rel_pathlist_hook" href="#set_rel_pathlist_hook">#</a> <i>void</i> <b>set_rel_pathlist_hook</b>(root, rel, rti, rte) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h "Source")
+<a name="set_rel_pathlist_hook" href="#set_rel_pathlist_hook">#</a> <i>void</i> <b>set_rel_pathlist_hook</b>(root, rel, rti, rte) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L33 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -350,7 +350,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="set_join_pathlist_hook" href="#set_join_pathlist_hook">#</a> <i>void</i> <b>set_join_pathlist_hook</b>(root, joinrel, outerrel, innerrel, jointype, extra) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h "Source")
+<a name="set_join_pathlist_hook" href="#set_join_pathlist_hook">#</a> <i>void</i> <b>set_join_pathlist_hook</b>(root, joinrel, outerrel, innerrel, jointype, extra) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L42 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -379,7 +379,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="join_search_hook" href="#join_search_hook">#</a> <i>RelOptInfo *</i> <b>join_search_hook</b>(root, levels_needed, initial_rels) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h "Source")
+<a name="join_search_hook" href="#join_search_hook">#</a> <i>RelOptInfo *</i> <b>join_search_hook</b>(root, levels_needed, initial_rels) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L48 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -406,7 +406,7 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="get_relation_info_hook" href="#get_relation_info_hook">#</a> <i>void</i> <b>get_relation_info_hook</b>(root, relationObjectId, inhparent, rel) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/plancat.h "Source")
+<a name="get_relation_info_hook" href="#get_relation_info_hook">#</a> <i>void</i> <b>get_relation_info_hook</b>(root, relationObjectId, inhparent, rel) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/plancat.h#L25 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -433,7 +433,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="planner_hook" href="#planner_hook">#</a> <i>PlannedStmt *</i> <b>planner_hook</b>(parse, cursorOptions, boundParams) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h "Source")
+<a name="planner_hook" href="#planner_hook">#</a> <i>PlannedStmt *</i> <b>planner_hook</b>(parse, cursorOptions, boundParams) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L25 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -460,7 +460,7 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="create_upper_paths_hook" href="#create_upper_paths_hook">#</a> <i>void</i> <b>create_upper_paths_hook</b>(root, stage, input_rel, output_rel) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h "Source")
+<a name="create_upper_paths_hook" href="#create_upper_paths_hook">#</a> <i>void</i> <b>create_upper_paths_hook</b>(root, stage, input_rel, output_rel) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L32 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -487,7 +487,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="post_parse_analyze_hook" href="#post_parse_analyze_hook">#</a> <i>void</i> <b>post_parse_analyze_hook</b>(pstate, query) [<>](https://github.com/postgres/postgres/blob/master/src/include/parser/analyze.h "Source")
+<a name="post_parse_analyze_hook" href="#post_parse_analyze_hook">#</a> <i>void</i> <b>post_parse_analyze_hook</b>(pstate, query) [<>](https://github.com/postgres/postgres/blob/master/src/include/parser/analyze.h#L22 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -512,7 +512,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="row_security_policy_hook_permissive" href="#row_security_policy_hook_permissive">#</a> <i>List *</i> <b>row_security_policy_hook_permissive</b>(cmdtype, relation) [<>](https://github.com/postgres/postgres/blob/master/src/include/rewrite/rowsecurity.h "Source")
+<a name="row_security_policy_hook_permissive" href="#row_security_policy_hook_permissive">#</a> <i>List *</i> <b>row_security_policy_hook_permissive</b>(cmdtype, relation) [<>](https://github.com/postgres/postgres/blob/master/src/include/rewrite/rowsecurity.h#L40 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -538,7 +538,7 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="row_security_policy_hook_restrictive" href="#row_security_policy_hook_restrictive">#</a> <i>List *</i> <b>row_security_policy_hook_restrictive</b>(cmdtype, relation) [<>](https://github.com/postgres/postgres/blob/master/src/include/rewrite/rowsecurity.h "Source")
+<a name="row_security_policy_hook_restrictive" href="#row_security_policy_hook_restrictive">#</a> <i>List *</i> <b>row_security_policy_hook_restrictive</b>(cmdtype, relation) [<>](https://github.com/postgres/postgres/blob/master/src/include/rewrite/rowsecurity.h#L42 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -564,7 +564,7 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="shmem_startup_hook" href="#shmem_startup_hook">#</a> <i>void</i> <b>shmem_startup_hook</b>() [<>](https://github.com/postgres/postgres/blob/master/src/include/storage/ipc.h "Source")
+<a name="shmem_startup_hook" href="#shmem_startup_hook">#</a> <i>void</i> <b>shmem_startup_hook</b>() [<>](https://github.com/postgres/postgres/blob/master/src/include/storage/ipc.h#L77 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -584,7 +584,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="ProcessUtility_hook" href="#ProcessUtility_hook">#</a> <i>void</i> <b>ProcessUtility_hook</b>(pstmt, queryString, context, params, queryEnv, dest, completionTag) [<>](https://github.com/postgres/postgres/blob/master/src/include/tcop/utility.h "Source")
+<a name="ProcessUtility_hook" href="#ProcessUtility_hook">#</a> <i>void</i> <b>ProcessUtility_hook</b>(pstmt, queryString, context, params, queryEnv, dest, completionTag) [<>](https://github.com/postgres/postgres/blob/master/src/include/tcop/utility.h#L32 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -614,7 +614,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="emit_log_hook" href="#emit_log_hook">#</a> <i>void</i> <b>emit_log_hook</b>(edata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/elog.h "Source")
+<a name="emit_log_hook" href="#emit_log_hook">#</a> <i>void</i> <b>emit_log_hook</b>(edata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/elog.h#L375 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -638,7 +638,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="get_attavgwidth_hook" href="#get_attavgwidth_hook">#</a> <i>int32</i> <b>get_attavgwidth_hook</b>(relid, attnum) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/lsyscache.h "Source")
+<a name="get_attavgwidth_hook" href="#get_attavgwidth_hook">#</a> <i>int32</i> <b>get_attavgwidth_hook</b>(relid, attnum) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/lsyscache.h#L62 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -664,7 +664,7 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="get_relation_stats_hook" href="#get_relation_stats_hook">#</a> <i>bool</i> <b>get_relation_stats_hook</b>(root, rte, attnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h "Source")
+<a name="get_relation_stats_hook" href="#get_relation_stats_hook">#</a> <i>bool</i> <b>get_relation_stats_hook</b>(root, rte, attnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h#L146 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
@@ -692,7 +692,7 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="get_index_stats_hook" href="#get_index_stats_hook">#</a> <i>bool</i> <b>get_index_stats_hook</b>(root, indexOid, indexattnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h "Source")
+<a name="get_index_stats_hook" href="#get_index_stats_hook">#</a> <i>bool</i> <b>get_index_stats_hook</b>(root, indexOid, indexattnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h#L151 "Source")
 
 Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
