@@ -7,11 +7,11 @@ Provide description here.
 {% endfor %}
 
 {% for section in sections -%}
-## [{{ section.name }}](Detailed#{{ section.slug }})
+## [{{ section.name }}](Detailed.md#{{ section.slug }})
 
 Provide description here.
 
 {% for hook in section.hooks -%}
-* [{{ hook.name }}](Detailed#{{ hook.name }}) — ...
+* [{{ hook.name }}](Detailed.md#{{ hook.name }}) — ...
 {% endfor %}
 {% endfor %}
