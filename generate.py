@@ -128,16 +128,16 @@ ExecutorCheckPerms_hook_type = HookType(
     name='ExecutorCheckPerms_hook_type',
     output='bool',
     inputs=[
-        HookInput('List', '*'),
-        HookInput('', 'bool'),
+        HookInput('List *', 'rangeTabls'),
+        HookInput('bool', 'abort'),
     ]
 )
 ClientAuthentication_hook_type = HookType(
     name='ClientAuthentication_hook_type',
     output='void',
     inputs=[
-        HookInput('Port', '*'),
-        HookInput('', 'int'),
+        HookInput('Port *', 'port'),
+        HookInput('int', 'status'),
     ]
 )
 join_search_hook_type = HookType(
