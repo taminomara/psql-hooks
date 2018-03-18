@@ -34,7 +34,7 @@ There are no inputs for this hook. Is there a global state this hook should intr
 
 {% if hook.type.output == 'void' -%}
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 {%- else -%}
 Describe hook output. Are there any constraints for the output value?

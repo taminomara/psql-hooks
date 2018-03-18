@@ -53,7 +53,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -81,7 +81,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -111,7 +111,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -164,7 +164,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -189,7 +189,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -216,7 +216,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -240,7 +240,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -264,7 +264,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -315,7 +315,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -342,7 +342,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -371,7 +371,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -425,7 +425,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -479,7 +479,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -504,7 +504,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -576,7 +576,7 @@ There are no inputs for this hook. Is there a global state this hook should intr
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -606,7 +606,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
@@ -630,7 +630,7 @@ Are there any special input states? Can they be null (e.g. `nullptr`)?
 *Output:*
 
 This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should thrown an error via a standard `ereport(ERROR, ...)`?
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
 Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
