@@ -47,5 +47,7 @@ Are there any mutable inputs this hook should change?
 
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
+----
+
 {% endfor %}
 {% endfor %}
