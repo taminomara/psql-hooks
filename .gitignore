@@ -1,1 +1,7 @@
 venv/
+bin
+include
+lib
+.Python
+pip-selfcheck.json
+.idea
