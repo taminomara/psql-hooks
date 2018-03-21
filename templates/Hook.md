@@ -2,6 +2,8 @@ Short description of this hook.
 
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
+It may be helpful to mention any common use-cases for this hook or some
+plugins that are using this hook.
 
 *Inputs:*
 
@@ -17,17 +19,9 @@ There are no inputs for this hook. Is there a global state this hook should intr
 {%- endif %}
 *Output:*
 
-{% if hook.type.output == 'void' -%}
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-{%- else -%}
+{% if hook.type.output != 'void' -%}
 Describe hook output. Are there any constraints for the output value?
 How postgres changes its behavior based on received output?
 Are there any special cases for output, e.g. returning `-1` or `nullptr`?
 Are there any mutable inputs this hook should change?
 {%- endif %}
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
