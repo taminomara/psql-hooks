@@ -264,7 +264,8 @@ also sorted by their name.
 
 Auxiliary hook which decides whether `fmgr_hook` should be applied to a function.
 
-Given a function id, decide whether 
+Given a function id, decide whether `fmgr_hook` should be called upon executing
+this function.
 
 The result of this hook should be combined with the result of a previously
 registered `needs_fmgr_hook` via the `OR` clause. This is required to ensure
