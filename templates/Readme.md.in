@@ -12,6 +12,6 @@ Provide description here.
 Provide description here.
 
 {% for hook in section.hooks -%}
-* [{{ hook.name }}](Detailed.md#{{ hook.name }}) — ...
+* [{{ hook.name }}](Detailed.md#{{ hook.name }}) — {{ make_short_description(hook) }}
 {% endfor %}
 {% endfor %}

@@ -1,5 +1,7 @@
 from collections import namedtuple
 
+import os
+
 import jinja2
 
 HookType = namedtuple('HookType', 'name output inputs')
@@ -417,13 +419,56 @@ sections = [
     ),
 ]
 
-if __name__ == '__main__':
-    with open('Readme.md.in', encoding='utf-8') as template_text:
-        template = jinja2.Template(template_text.read())
-        with open('Readme.generated.md', 'w', encoding='utf-8') as f:
-            f.write(template.render(sections=sections))
 
-    with open('Detailed.md.in', encoding='utf-8') as template_text:
-        template = jinja2.Template(template_text.read())
-        with open('Detailed.generated.md', 'w', encoding='utf-8') as f:
-            f.write(template.render(sections=sections))
+def make_short_description(hook):
+    path = 'hooks/' + hook.name + '.md'
+
+    if not os.path.exists(path):
+        return ''
+
+    with open(path, encoding='utf-8') as hook_text:
+        for line in hook_text:
+            line = line.strip()
+            if line:
+                return line
+
+
+def move_before_generation(output_path):
+    if not os.path.exists(output_path):
+        return
+
+    path, ext = os.path.splitext(output_path)
+
+    i = 1
+    while os.path.exists(path + '.old.' + str(i) + ext):
+        i += 1
+
+    os.rename(output_path, path + '.old.' + str(i) + ext)
+
+
+def write_template(template_path, output_path, **context):
+    with open(template_path, encoding='utf-8') as template_text:
+        environment = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
+        environment.globals['make_short_description'] = make_short_description
+        template = environment.from_string(template_text.read())
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(template.render(**context))
+
+
+def main():
+    for section in sections:
+        for hook in section.hooks:
+            path = 'hooks/' + hook.name + '.md'
+            if os.path.exists(path):
+                continue
+            write_template('templates/Hook.md.in', path, hook=hook)
+
+    move_before_generation('Readme.md')
+    write_template('templates/Readme.md.in', 'Readme.md', sections=sections)
+
+    move_before_generation('Detailed.md')
+    write_template('templates/Detailed.md.in', 'Detailed.md', sections=sections)
+
+
+if __name__ == '__main__':
+    main()
