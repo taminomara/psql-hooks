@@ -775,7 +775,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 
 
 
-<a name="func_setup" href="#func_setup">#</a> <i>void</i> <b>func_setup</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1071 "Source")
+<a name="func_setup" href="#func_setup">#</a> <i>void</i> <b>func_setup</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1071 "Source")
 
 Short description of this hook.
 
@@ -801,7 +801,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="func_beg" href="#func_beg">#</a> <i>void</i> <b>func_beg</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1072 "Source")
+<a name="func_beg" href="#func_beg">#</a> <i>void</i> <b>func_beg</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1072 "Source")
 
 Short description of this hook.
 
@@ -827,7 +827,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="func_end" href="#func_end">#</a> <i>void</i> <b>func_end</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1073 "Source")
+<a name="func_end" href="#func_end">#</a> <i>void</i> <b>func_end</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1073 "Source")
 
 Short description of this hook.
 
@@ -853,7 +853,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="stmt_beg" href="#stmt_beg">#</a> <i>void</i> <b>stmt_beg</b>(estate, stmt) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1074 "Source")
+<a name="stmt_beg" href="#stmt_beg">#</a> <i>void</i> <b>stmt_beg</b>(estate, stmt) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1074 "Source")
 
 Short description of this hook.
 
@@ -879,7 +879,7 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="stmt_end" href="#stmt_end">#</a> <i>void</i> <b>stmt_end</b>(estate, stmt) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1075 "Source")
+<a name="stmt_end" href="#stmt_end">#</a> <i>void</i> <b>stmt_end</b>(estate, stmt) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1075 "Source")
 
 Short description of this hook.
 

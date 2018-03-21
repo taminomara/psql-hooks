@@ -444,27 +444,27 @@ sections = [
             Hook(
                 func_hook_type,
                 'func_setup',
-                link('src/pl/plpgsql.h#L1071')
+                link('src/pl/plpgsql/src/plpgsql.h#L1071')
             ),
             Hook(
                 func_hook_type,
                 'func_beg',
-                link('src/pl/plpgsql.h#L1072')
+                link('src/pl/plpgsql/src/plpgsql.h#L1072')
             ),
             Hook(
                 func_hook_type,
                 'func_end',
-                link('src/pl/plpgsql.h#L1073')
+                link('src/pl/plpgsql/src/plpgsql.h#L1073')
             ),
             Hook(
                 stmt_hook_type,
                 'stmt_beg',
-                link('src/pl/plpgsql.h#L1074')
+                link('src/pl/plpgsql/src/plpgsql.h#L1074')
             ),
             Hook(
                 stmt_hook_type,
                 'stmt_end',
-                link('src/pl/plpgsql.h#L1075')
+                link('src/pl/plpgsql/src/plpgsql.h#L1075')
             ),
         ]
     ),
