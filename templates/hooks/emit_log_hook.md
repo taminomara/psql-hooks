@@ -2,9 +2,8 @@ Hook for intercepting messages before they are sent to the server log.
 
 This hook is called just before sending an error message to the server log
 and to the client. The purpose of this hook is to invoke an additional
-logic and possibly preventing this error message from being added to the
+logic and possibly prevent this error message from being added to the
 server log.
-
 
 *Inputs:*
 
@@ -22,8 +21,7 @@ flags.
 *Use-cases:*
 
 Setting up a sophisticated logging process, i.e. this hook can log errors
-on its own and than disable them being added to the main server log.
-
-Counting some statistics on log messages.
+on its own and than disable them being added to the main server log;
+counting some statistics on log messages.
 
 [emit_log_hook_1]: https://github.com/postgres/postgres/blob/master/src/backend/utils/error/elog.c#L1456

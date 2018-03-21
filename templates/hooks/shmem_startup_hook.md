@@ -1,17 +1,16 @@
-Short description of this hook.
+Hook for plugins to initialize their shared memory.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook is called by postmaster or by a standalone backend
+right after postgres initializes its shared memory and semaphores
+so that plugins have chance to initialize their shared state.
 
-*Inputs:*
+It also may be called by a backend forked from the postmaster.
+In this situation, the shared memory segment already exists, so you only have
+to initialize the local memory state (check `!IsUnderPostmaster`
+to determine if that's the case).
 
-There are no inputs for this hook. Is there a global state this hook should introspect?
-*Output:*
+Note that you can bind a callback for shared state teardown
+via `on_shmem_exit`.
 
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+Check out the `pg_stat_statements` code to get the idea on how to implement
+this hook correctly.
