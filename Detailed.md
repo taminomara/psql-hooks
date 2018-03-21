@@ -262,7 +262,7 @@ also sorted by their name.
 
 <a name="needs_fmgr_hook" href="#needs_fmgr_hook">#</a> <i>bool</i> <b>needs_fmgr_hook</b>(fn_oid) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L727 "Source")
 
-Auxiliary hook which decides whether `fmgr_hook` should be called.
+Auxiliary hook which decides whether `fmgr_hook` should be applied to a function.
 
 Given a function id, decide whether 
 
@@ -270,6 +270,8 @@ The result of this hook should be combined with the result of a previously
 registered `needs_fmgr_hook` via the `OR` clause. This is required to ensure
 that other plugins can hook function even though this very plugin does
 not hook them. Such behavior is vital for proper work of the security plugins.
+
+Note that hooked functions are not inlined.
 
 *Inputs:*
 

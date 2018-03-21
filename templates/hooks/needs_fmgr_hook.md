@@ -1,4 +1,4 @@
-Auxiliary hook which decides whether `fmgr_hook` should be called.
+Auxiliary hook which decides whether `fmgr_hook` should be applied to a function.
 
 Given a function id, decide whether 
 
@@ -6,6 +6,8 @@ The result of this hook should be combined with the result of a previously
 registered `needs_fmgr_hook` via the `OR` clause. This is required to ensure
 that other plugins can hook function even though this very plugin does
 not hook them. Such behavior is vital for proper work of the security plugins.
+
+Note that hooked functions are not inlined.
 
 *Inputs:*
 
