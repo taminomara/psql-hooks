@@ -24,7 +24,7 @@ Provide description here
 * [check_password_hook](Detailed.md#check_password_hook) — hook for enforcing password constraints and performing action on password change.
 * [ClientAuthentication_hook](Detailed.md#ClientAuthentication_hook) — hook for plugins to control the authentication process.
 * [ExecutorCheckPerms_hook](Detailed.md#ExecutorCheckPerms_hook) — hook for adding additional security checks on the per-relation level.
-* [object_access_hook](Detailed.md#object_access_hook) — multi-pass hook to monitor accesses to objects.
+* [object_access_hook](Detailed.md#object_access_hook) — hook to monitor accesses to objects.
 * [row_security_policy_hook_permissive](Detailed.md#row_security_policy_hook_permissive) — short description of this hook.
 * [row_security_policy_hook_restrictive](Detailed.md#row_security_policy_hook_restrictive) — short description of this hook.
 
