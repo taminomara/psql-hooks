@@ -179,9 +179,8 @@ Other types may be added in the future.
 For different access types, inputs of this hook mean different things.
 
 * <i>ObjectAccessType</i> <b>access</b> — access type.
-* <i>Oid</i> <b>classId</b> — `classId` is the id of a relation which contains
-  the newly create object. You can determine type of an object by this
-  parameter).
+* <i>Oid</i> <b>classId</b> — id of a relation which contains this object.
+  You can determine type of an object by this parameter.
 * <i>Oid</i> <b>objectId</b> — object that is being accessed.
 * <i>int</i> <b>subId</b> — subitem within object (e.g. column), or 0.
 * <i>void *</i> <b>arg</b> — access type specific argument.
