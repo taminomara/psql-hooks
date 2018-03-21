@@ -112,29 +112,31 @@ check failure will close the connection without calling this hook.
 
 <a name="ExecutorCheckPerms_hook" href="#ExecutorCheckPerms_hook">#</a> <i>bool</i> <b>ExecutorCheckPerms_hook</b>(rangeTabls, abort) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L90 "Source")
 
-Short description of this hook.
+Hook for adding additional security checks on the per-relation level.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Given a relations list, this hook should return `true` if access is granted.
+`false`, if access is not granted and `abort` is `false`. If `abort` is `true`
+and access is not granted, it should throw an appropriate error.
+
+This hook is not called if the standard permission check procedure denies
+access to relation. Therefore, there is no way to actually
+raise user privileges.
+
+Theoretically, only plain-relation RTEs need to be checked in this hook.
+Function RTEs are checked during the function preparation procedure.
+Join, subquery, and special RTEs need no checks.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>List *</i> <b>rangeTabls</b> — ...
-* <i>bool</i> <b>abort</b> — ...
+* <i>List *</i> <b>rangeTabls</b> — list of `RangeTblEntry` objects that needs
+  checking.
+* <i>bool</i> <b>abort</b> — it `true`, raise `aclcheck_error` instead of
+  returning `false` from the hook.
 
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+`true` if user have privileges to access given relations, `false` or raise an
+error otherwise, depending on the `abort` flag.
 
 
 <a name="needs_fmgr_hook" href="#needs_fmgr_hook">#</a> <i>bool</i> <b>needs_fmgr_hook</b>(fn_oid) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L727 "Source")
