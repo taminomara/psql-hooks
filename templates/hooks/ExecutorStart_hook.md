@@ -1,22 +1,15 @@
-Short description of this hook.
+Called at the beginning of any execution of any query plan.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Note: when it set, replaces the [standard_ExecutorStart()](https://github.com/postgres/postgres/blob/src/backend/executor/execMain.c#L149), 
+which contains a lot of predefined logic. 
+Consider inclusion of the standard executor to the hook handler 
+if you assume adding your logic atop.
+
+This hook should not provide any output.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>QueryDesc *</i> <b>queryDesc</b> — ...
-* <i>int</i> <b>eflags</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>QueryDesc *</i> <b>queryDesc</b> — created by CreateQueryDesc, 
+tupDesc field of the QueryDesc is filled in to describe the tuples that will be 
+returned, and the internal fields (estate and planstate) are set up.
+* <i>int</i> <b>eflags</b> — contains flag bits as described in executor.h.
