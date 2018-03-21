@@ -308,16 +308,6 @@ sections = [
                 link('src/include/executor/executor.h#L90')
             ),
             Hook(
-                needs_fmgr_hook_type,
-                'needs_fmgr_hook',
-                link('src/include/fmgr.h#L727')
-            ),
-            Hook(
-                fmgr_hook_type,
-                'fmgr_hook',
-                link('src/include/fmgr.h#L728')
-            ),
-            Hook(
                 object_access_hook_type,
                 'object_access_hook',
                 link('src/include/catalog/objectaccess.h#L127')
@@ -331,6 +321,24 @@ sections = [
                 row_security_policy_hook_type,
                 'row_security_policy_hook_restrictive',
                 link('src/include/rewrite/rowsecurity.h#L42')
+            ),
+        ]
+    ),
+    HookSection(
+        'Function Manager Hooks',
+        'function-manager-hooks',
+        '',
+        '',
+        [
+            Hook(
+                needs_fmgr_hook_type,
+                'needs_fmgr_hook',
+                link('src/include/fmgr.h#L727')
+            ),
+            Hook(
+                fmgr_hook_type,
+                'fmgr_hook',
+                link('src/include/fmgr.h#L728')
             ),
         ]
     ),

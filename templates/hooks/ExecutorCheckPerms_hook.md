@@ -5,7 +5,7 @@ Given a relations list, this hook should return `true` if access is granted.
 and access is not granted, it should throw an appropriate error.
 
 This hook is not called if the standard permission check procedure denies
-access to relation. Therefore, there is no way to actually
+access to any relation in the list. Therefore, there is no way to actually
 raise user privileges.
 
 Theoretically, only plain-relation RTEs need to be checked in this hook.
@@ -16,7 +16,7 @@ Join, subquery, and special RTEs need no checks.
 
 * <i>List *</i> <b>rangeTabls</b> — list of `RangeTblEntry` objects that needs
   checking.
-* <i>bool</i> <b>abort</b> — it `true`, raise `aclcheck_error` instead of
+* <i>bool</i> <b>abort</b> — if `true`, raise `aclcheck_error` instead of
   returning `false` from the hook.
 
 *Output:*

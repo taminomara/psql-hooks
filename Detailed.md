@@ -4,6 +4,7 @@ Provide description here.
 
 * [General Hooks](#general-hooks)
 * [Security Hooks](#security-hooks)
+* [Function Manager Hooks](#function-manager-hooks)
 * [Planner Hooks](#planner-hooks)
 * [Executor Hooks](#executor-hooks)
 * [PL/pgsql Hooks](#plpgsql-hooks)
@@ -119,7 +120,7 @@ Given a relations list, this hook should return `true` if access is granted.
 and access is not granted, it should throw an appropriate error.
 
 This hook is not called if the standard permission check procedure denies
-access to relation. Therefore, there is no way to actually
+access to any relation in the list. Therefore, there is no way to actually
 raise user privileges.
 
 Theoretically, only plain-relation RTEs need to be checked in this hook.
@@ -130,66 +131,13 @@ Join, subquery, and special RTEs need no checks.
 
 * <i>List *</i> <b>rangeTabls</b> — list of `RangeTblEntry` objects that needs
   checking.
-* <i>bool</i> <b>abort</b> — it `true`, raise `aclcheck_error` instead of
+* <i>bool</i> <b>abort</b> — if `true`, raise `aclcheck_error` instead of
   returning `false` from the hook.
 
 *Output:*
 
 `true` if user have privileges to access given relations, `false` or raise an
 error otherwise, depending on the `abort` flag.
-
-
-<a name="needs_fmgr_hook" href="#needs_fmgr_hook">#</a> <i>bool</i> <b>needs_fmgr_hook</b>(fn_oid) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L727 "Source")
-
-Short description of this hook.
-
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
-
-*Inputs:*
-
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Oid</i> <b>fn_oid</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
-
-
-<a name="fmgr_hook" href="#fmgr_hook">#</a> <i>void</i> <b>fmgr_hook</b>(event, flinfo, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L728 "Source")
-
-Short description of this hook.
-
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
-
-*Inputs:*
-
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>FmgrHookEventType</i> <b>event</b> — ...
-* <i>FmgrInfo *</i> <b>flinfo</b> — ...
-* <i>Datum *</i> <b>arg</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
 <a name="object_access_hook" href="#object_access_hook">#</a> <i>void</i> <b>object_access_hook</b>(access, classId, objectId, subId, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/catalog/objectaccess.h#L127 "Source")
@@ -268,6 +216,64 @@ Describe hook output. Are there any constraints for the output value?
 How postgres changes its behavior based on received output?
 Are there any special cases for output, e.g. returning `-1` or `nullptr`?
 Are there any mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+## Function Manager Hooks
+
+
+
+
+<a name="needs_fmgr_hook" href="#needs_fmgr_hook">#</a> <i>bool</i> <b>needs_fmgr_hook</b>(fn_oid) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L727 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>Oid</i> <b>fn_oid</b> — ...
+
+*Output:*
+
+Describe hook output. Are there any constraints for the output value?
+How postgres changes its behavior based on received output?
+Are there any special cases for output, e.g. returning `-1` or `nullptr`?
+Are there any mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="fmgr_hook" href="#fmgr_hook">#</a> <i>void</i> <b>fmgr_hook</b>(event, flinfo, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L728 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>FmgrHookEventType</i> <b>event</b> — ...
+* <i>FmgrInfo *</i> <b>flinfo</b> — ...
+* <i>Datum *</i> <b>arg</b> — ...
+
+*Output:*
+
+This hook does not produce any output. Describe, what exactly it should do.
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
+Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
 
