@@ -11,35 +11,31 @@ Provide description here.
 
 ## General Hooks
 
-Provide description here.
+<a name="object_access_hook" href="#object_access_hook">#</a> <i>void</i> <b>object_access_hook</b>(access, classId, objectId, subId, arg) [<>](https://doxygen.postgresql.org/objectaccess_8h_source.html#l00127 "Source")
 
-
-<a name="object_access_hook" href="#object_access_hook">#</a> <i>void</i> <b>object_access_hook</b>(access, classId, objectId, subId, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/catalog/objectaccess.h#L127 "Source")
-
-Short description of this hook.
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Multi-pass hook to monitor accesses to objects.
+Can be triggered by the following entrypoints:\
+[RunFunctionExecuteHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a41ee35a449248c380c9a8fb0529bd4af)\
+[RunNamespaceSearchHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a6e3676b4278836b87b28148eb9d666fc)\
+[RunObjectDropHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a1b20ed6ac04157d8453802a07254ca90)\
+[RunObjectPostAlterHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a3250abdee32af9fcb65c2a5fc1a1b496)\
+[RunObjectPostCreateHook()](https://doxygen.postgresql.org/objectaccess_8c.html#acba44450c8b47e3fe01ff1df9eb1e409)
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>ObjectAccessType</i> <b>access</b> — ...
-* <i>Oid</i> <b>classId</b> — ...
-* <i>Oid</i> <b>objectId</b> — ...
-* <i>int</i> <b>subId</b> — ...
-* <i>void *</i> <b>arg</b> — ...
+* <i>ObjectAccessType</i> <b>access</b> — access event type ([ref](https://doxygen.postgresql.org/objectaccess_8h.html#a9b9ef77e618c4d2025e0413a6fe214a0))
+* <i>Oid</i> <b>classId</b>
+* <i>Oid</i> <b>objectId</b>
+* <i>int</i> <b>subId</b>
+* <i>void *</i> <b>arg</b> — entrypoint-specific argument (optional)
 
 *Output:*
 
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
+Hook should not produce any output.
 
 *Use-cases:*
 
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+Useful for security and logging extensions.
 
 
 <a name="ExplainOneQuery_hook" href="#ExplainOneQuery_hook">#</a> <i>void</i> <b>ExplainOneQuery_hook</b>(query, cursorOptions, into, es, queryString, params, queryEnv) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h#L58 "Source")
