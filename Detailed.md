@@ -87,33 +87,27 @@ isn't strong enough.
   `PASSWORD_TYPE_PLAINTEXT` for a plaintext password.
 * <i>Datum</i> <b>validuntil_time</b> — date upon which this password expires.
 * <i>bool</i> <b>validuntil_null</b> — a flag that is true if and only if
-  the `validuntil_time` parameter is not set (i.e. a null date is passed).
+  the password have no expiration date (i.e. a null date is passed).
 
 
 <a name="ClientAuthentication_hook" href="#ClientAuthentication_hook">#</a> <i>void</i> <b>ClientAuthentication_hook</b>(port, status) [<>](https://github.com/postgres/postgres/blob/master/src/include/libpq/auth.h#L27 "Source")
 
-Short description of this hook.
+Hook for plugins to control the authentication process.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Called after finishing user authentication (regardless of whether authentication
+succeed or not).
+
+This hook will be called for every connection that passed authentication.
+However, it is not guaranteed to be called if there are issues with the
+connection itself. For example, SSL verification failure or pg_hba.conf
+check failure will close the connection without calling this hook.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Port *</i> <b>port</b> — ...
-* <i>int</i> <b>status</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>Port *</i> <b>port</b> — full info about the connection and
+  the connected user.
+* <i>int</i> <b>status</b> — a standard status code. `STATUS_OK` (`0`)
+  if authentication successful.
 
 
 <a name="ExecutorCheckPerms_hook" href="#ExecutorCheckPerms_hook">#</a> <i>bool</i> <b>ExecutorCheckPerms_hook</b>(rangeTabls, abort) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L90 "Source")

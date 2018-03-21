@@ -21,7 +21,7 @@ Provide description here
 
 
 * [check_password_hook](Detailed.md#check_password_hook) — hook for enforcing password constraints and performing action on password change.
-* [ClientAuthentication_hook](Detailed.md#ClientAuthentication_hook) — short description of this hook.
+* [ClientAuthentication_hook](Detailed.md#ClientAuthentication_hook) — hook for plugins to control the authentication process.
 * [ExecutorCheckPerms_hook](Detailed.md#ExecutorCheckPerms_hook) — short description of this hook.
 * [needs_fmgr_hook](Detailed.md#needs_fmgr_hook) — short description of this hook.
 * [fmgr_hook](Detailed.md#fmgr_hook) — short description of this hook.

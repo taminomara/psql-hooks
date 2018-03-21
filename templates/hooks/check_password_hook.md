@@ -17,4 +17,4 @@ isn't strong enough.
   `PASSWORD_TYPE_PLAINTEXT` for a plaintext password.
 * <i>Datum</i> <b>validuntil_time</b> — date upon which this password expires.
 * <i>bool</i> <b>validuntil_null</b> — a flag that is true if and only if
-  the `validuntil_time` parameter is not set (i.e. a null date is passed).
+  the password have no expiration date (i.e. a null date is passed).
