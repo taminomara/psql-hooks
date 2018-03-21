@@ -481,7 +481,7 @@ def make_short_description(hook):
         for line in hook_text:
             line = line.strip()
             if line:
-                return line
+                return line[0].lower() + line[1:]
 
 
 def move_before_generation(output_path):
