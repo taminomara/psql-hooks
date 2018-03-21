@@ -72,31 +72,26 @@ this hook correctly.
 
 <a name="check_password_hook" href="#check_password_hook">#</a> <i>void</i> <b>check_password_hook</b>(username, shadow_pass, password_type, validuntil_time, validuntil_null) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/user.h#L25 "Source")
 
-Short description of this hook.
+Hook for enforcing password constraints and performing action on password change.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook is called whenever a new role is created via the `CREATE ROLE`
+statement or a password for an existing role is changed via the `ALTER ROLE`
+statement. Given a shadow password and some additional info, this hook can
+raise an error using the standard `ereport` mechanism if the password
+isn't strong enough.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>const char *</i> <b>username</b> — ...
-* <i>const char *</i> <b>shadow_pass</b> — ...
-* <i>PasswordType</i> <b>password_type</b> — ...
-* <i>Datum</i> <b>validuntil_time</b> — ...
-* <i>bool</i> <b>validuntil_null</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>const char *</i> <b>username</b> — name of the created/altered role.
+* <i>const char *</i> <b>shadow_pass</b> — a shadow pass, i.e. a plain password
+  or a password hash.
+* <i>PasswordType</i> <b>password_type</b> — type of the password.
+  `PASSWORD_TYPE_MD5` for an md5-encrypted password,
+  `PASSWORD_TYPE_SCRAM_SHA_256` for a sha-256-encrypted password,
+  `PASSWORD_TYPE_PLAINTEXT` for a plaintext password.
+* <i>Datum</i> <b>validuntil_time</b> — date upon which this password expires.
+* <i>bool</i> <b>validuntil_null</b> — a flag that is true if and only if
+  the `validuntil_time` parameter is not set (i.e. a null date is passed).
 
 
 <a name="ClientAuthentication_hook" href="#ClientAuthentication_hook">#</a> <i>void</i> <b>ClientAuthentication_hook</b>(port, status) [<>](https://github.com/postgres/postgres/blob/master/src/include/libpq/auth.h#L27 "Source")
