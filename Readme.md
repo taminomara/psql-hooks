@@ -32,7 +32,7 @@ Provide description here
 
 
 
-* [needs_fmgr_hook](Detailed.md#needs_fmgr_hook) — short description of this hook.
+* [needs_fmgr_hook](Detailed.md#needs_fmgr_hook) — auxiliary hook which decides whether `fmgr_hook` should be called.
 * [fmgr_hook](Detailed.md#fmgr_hook) — short description of this hook.
 
 ## [Planner Hooks](Detailed.md#planner-hooks)

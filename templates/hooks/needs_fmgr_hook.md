@@ -1,22 +1,16 @@
-Short description of this hook.
+Auxiliary hook which decides whether `fmgr_hook` should be called.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Given a function id, decide whether 
+
+The result of this hook should be combined with the result of a previously
+registered `needs_fmgr_hook` via the `OR` clause. This is required to ensure
+that other plugins can hook function even though this very plugin does
+not hook them. Such behavior is vital for proper work of the security plugins.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Oid</i> <b>fn_oid</b> — ...
+* <i>Oid</i> <b>fn_oid</b> — id of a function which needs hooking.
 
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+Return `true` if you want to hook enter/exit event for this function.
