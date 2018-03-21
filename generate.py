@@ -250,29 +250,48 @@ get_index_stats_hook_type = HookType(
         HookInput('VariableStatData *', 'vardata'),
     ]
 )
+func_hook_type = HookType(
+    name='func_hook_type',
+    output='void',
+    inputs=[
+        HookInput('PLpgSQL_execstate *', 'estate'),
+        HookInput('PLpgSQL_function *', 'func'),
+    ]
+)
+stmt_hook_type = HookType(
+    name='stmt_hook_type',
+    output='void',
+    inputs=[
+        HookInput('PLpgSQL_execstate *', 'estate'),
+        HookInput('PLpgSQL_stmt *', 'stmt'),
+    ]
+)
 
 sections = [
     HookSection(
         'General Hooks',
         'general-hooks',
-        'Short description',
-        'Long description',
+        '',
+        '',
         [
             Hook(
-                object_access_hook_type,
-                'object_access_hook',
-                link('src/include/catalog/objectaccess.h#L127')
+                emit_log_hook_type,
+                'emit_log_hook',
+                link('src/include/utils/elog.h#L375')
             ),
             Hook(
-                ExplainOneQuery_hook_type,
-                'ExplainOneQuery_hook',
-                link('src/include/commands/explain.h#L58')
+                shmem_startup_hook_type,
+                'shmem_startup_hook',
+                link('src/include/storage/ipc.h#L77')
             ),
-            Hook(
-                explain_get_index_name_hook_type,
-                'explain_get_index_name_hook',
-                link('src/include/commands/explain.h#L62')
-            ),
+        ]
+    ),
+    HookSection(
+        'Security Hooks',
+        'security-hooks',
+        '',
+        '',
+        [
             Hook(
                 check_password_hook_type,
                 'check_password_hook',
@@ -284,9 +303,24 @@ sections = [
                 link('src/include/libpq/auth.h#L27')
             ),
             Hook(
-                post_parse_analyze_hook_type,
-                'post_parse_analyze_hook',
-                link('src/include/parser/analyze.h#L22')
+                ExecutorCheckPerms_hook_type,
+                'ExecutorCheckPerms_hook',
+                link('src/include/executor/executor.h#L90')
+            ),
+            Hook(
+                needs_fmgr_hook_type,
+                'needs_fmgr_hook',
+                link('src/include/fmgr.h#L727')
+            ),
+            Hook(
+                fmgr_hook_type,
+                'fmgr_hook',
+                link('src/include/fmgr.h#L728')
+            ),
+            Hook(
+                object_access_hook_type,
+                'object_access_hook',
+                link('src/include/catalog/objectaccess.h#L127')
             ),
             Hook(
                 row_security_policy_hook_type,
@@ -298,56 +332,33 @@ sections = [
                 'row_security_policy_hook_restrictive',
                 link('src/include/rewrite/rowsecurity.h#L42')
             ),
-            Hook(
-                shmem_startup_hook_type,
-                'shmem_startup_hook',
-                link('src/include/storage/ipc.h#L77')
-            ),
-            Hook(
-                ProcessUtility_hook_type,
-                'ProcessUtility_hook',
-                link('src/include/tcop/utility.h#L32')
-            ),
-        ],
+        ]
     ),
     HookSection(
-        'Function Manager Hooks',
-        'function-manager-hooks',
-        'Short description',
-        'Long description',
+        'Planner Hooks',
+        'planner-hooks',
+        '',
+        '',
         [
             Hook(
-                needs_fmgr_hook_type,
-                'needs_fmgr_hook',
-                link('src/include/fmgr.h#L727')
+                explain_get_index_name_hook_type,
+                'explain_get_index_name_hook',
+                link('src/include/commands/explain.h#L62')
             ),
             Hook(
-                fmgr_hook_type,
-                'fmgr_hook',
-                link('src/include/fmgr.h#L728')
-            ),
-        ],
-    ),
-    HookSection(
-        'Optimiser Hooks',
-        'optimiser-hooks',
-        'Short description',
-        'Long description',
-        [
-            Hook(
-                set_rel_pathlist_hook_type,
-                'set_rel_pathlist_hook',
-                link('src/include/optimizer/paths.h#L33')
+                ExplainOneQuery_hook_type,
+                'ExplainOneQuery_hook',
+                link('src/include/commands/explain.h#L58')
             ),
             Hook(
-                set_join_pathlist_hook_type,
-                'set_join_pathlist_hook',
-                link('src/include/optimizer/paths.h#L42')
+                get_attavgwidth_hook_type,
+                'get_attavgwidth_hook',
+                link('src/include/utils/lsyscache.h#L62')
             ),
             Hook(
-                join_search_hook_type,
-                'join_search_hook',
-                link('src/include/optimizer/paths.h#L48')
+                get_index_stats_hook_type,
+                'get_index_stats_hook',
+                link('src/include/utils/selfuncs.h#L151')
             ),
             Hook(
                 get_relation_info_hook_type,
@@ -355,22 +366,47 @@ sections = [
                 link('src/include/optimizer/plancat.h#L25')
             ),
             Hook(
+                get_relation_stats_hook_type,
+                'get_relation_stats_hook',
+                link('src/include/utils/selfuncs.h#L146')
+            ),
+            Hook(
                 planner_hook_type,
                 'planner_hook',
                 link('src/include/optimizer/planner.h#L25')
             ),
             Hook(
+                join_search_hook_type,
+                'join_search_hook',
+                link('src/include/optimizer/paths.h#L48')
+            ),
+            Hook(  # TODO: does it really belongs to this section
+                set_rel_pathlist_hook_type,
+                'set_rel_pathlist_hook',
+                link('src/include/optimizer/paths.h#L33')
+            ),
+            Hook(  # TODO: does it really belongs to this section
+                set_join_pathlist_hook_type,
+                'set_join_pathlist_hook',
+                link('src/include/optimizer/paths.h#L42')
+            ),
+            Hook(  # TODO: does it really belongs to this section
                 create_upper_paths_hook_type,
                 'create_upper_paths_hook',
                 link('src/include/optimizer/planner.h#L32')
             ),
-        ],
+            Hook(  # TODO: does it really belongs to this section
+                post_parse_analyze_hook_type,
+                'post_parse_analyze_hook',
+                link('src/include/parser/analyze.h#L22')
+            ),
+        ]
     ),
     HookSection(
         'Executor Hooks',
         'executor-hooks',
-        'Short description',
-        'Long description',
+        '',
+        '',
         [
             Hook(
                 ExecutorStart_hook_type,
@@ -393,39 +429,44 @@ sections = [
                 link('src/include/executor/executor.h#L86')
             ),
             Hook(
-                ExecutorCheckPerms_hook_type,
-                'ExecutorCheckPerms_hook',
-                link('src/include/executor/executor.h#L90')
+                ProcessUtility_hook_type,
+                'ProcessUtility_hook',
+                link('src/include/tcop/utility.h#L32')
             ),
-        ],
+        ]
     ),
     HookSection(
-        'Utils Hooks',
-        'utils-hooks',
-        'Short description',
-        'Long description',
+        'PL/pgsql Hooks',
+        'ps-pgsql-hooks',
+        '',
+        '',
         [
             Hook(
-                emit_log_hook_type,
-                'emit_log_hook',
-                link('src/include/utils/elog.h#L375')
+                func_hook_type,
+                'func_setup',
+                link('src/pl/plpgsql.h#L1071')
             ),
             Hook(
-                get_attavgwidth_hook_type,
-                'get_attavgwidth_hook',
-                link('src/include/utils/lsyscache.h#L62')
+                func_hook_type,
+                'func_beg',
+                link('src/pl/plpgsql.h#L1072')
             ),
             Hook(
-                get_relation_stats_hook_type,
-                'get_relation_stats_hook',
-                link('src/include/utils/selfuncs.h#L146')
+                func_hook_type,
+                'func_end',
+                link('src/pl/plpgsql.h#L1073')
             ),
             Hook(
-                get_index_stats_hook_type,
-                'get_index_stats_hook',
-                link('src/include/utils/selfuncs.h#L151')
+                stmt_hook_type,
+                'stmt_beg',
+                link('src/pl/plpgsql.h#L1074')
             ),
-        ],
+            Hook(
+                stmt_hook_type,
+                'stmt_end',
+                link('src/pl/plpgsql.h#L1075')
+            ),
+        ]
     ),
 ]
 
