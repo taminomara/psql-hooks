@@ -437,7 +437,7 @@ sections = [
     ),
     HookSection(
         'PL/pgsql Hooks',
-        'pspgsql-hooks',
+        'plpgsql-hooks',
         '',
         '',
         [

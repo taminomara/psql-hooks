@@ -6,7 +6,7 @@ Provide description here.
 * [Security Hooks](#security-hooks)
 * [Planner Hooks](#planner-hooks)
 * [Executor Hooks](#executor-hooks)
-* [PL/pgsql Hooks](#pspgsql-hooks)
+* [PL/pgsql Hooks](#plpgsql-hooks)
 
 
 ## General Hooks

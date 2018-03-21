@@ -6,7 +6,7 @@ Provide description here
 * [Security Hooks](#security-hooks)
 * [Planner Hooks](#planner-hooks)
 * [Executor Hooks](#executor-hooks)
-* [PL/pgsql Hooks](#pspgsql-hooks)
+* [PL/pgsql Hooks](#plpgsql-hooks)
 
 
 ## [General Hooks](Detailed.md#general-hooks)
@@ -56,7 +56,7 @@ Provide description here
 * [ExecutorEnd_hook](Detailed.md#ExecutorEnd_hook) — Short description of this hook.
 * [ProcessUtility_hook](Detailed.md#ProcessUtility_hook) — Short description of this hook.
 
-## [PL/pgsql Hooks](Detailed.md#pspgsql-hooks)
+## [PL/pgsql Hooks](Detailed.md#plpgsql-hooks)
 
 
 
