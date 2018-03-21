@@ -1,27 +1,20 @@
-Short description of this hook.
+Hook for the ProcessUtility.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Replaces [standard_ProcessUtility()](https://github.com/postgres/postgres/blob/src/backend/tcop/utility.c#L375)
+
+This hook should not provide any output.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannedStmt *</i> <b>pstmt</b> — ...
-* <i>const char *</i> <b>queryString</b> — ...
-* <i>ProcessUtilityContext</i> <b>context</b> — ...
-* <i>ParamListInfo</i> <b>params</b> — ...
-* <i>QueryEnvironment *</i> <b>queryEnv</b> — ...
-* <i>DestReceiver *</i> <b>dest</b> — ...
-* <i>char *</i> <b>completionTag</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannedStmt *</i> <b>pstmt</b> — PlannedStmt wrapper for the utility statement
+* <i>const char *</i> <b>queryString</b> — original source text of command, 
+may be passed multiple times when processing a query string
+containing multiple semicolon-separated statements. pstmt->stmt_location and pstmt->stmt_len 
+indicates the substring containing the current statement.
+* <i>ProcessUtilityContext</i> <b>context</b> — identifies source of statement 
+(toplevel client command, non-toplevel client command, subcommand of a larger utility command)
+* <i>ParamListInfo</i> <b>params</b> — parameters of an execution.
+* <i>QueryEnvironment *</i> <b>queryEnv</b> — execution environment, optional, can be NULL.
+* <i>DestReceiver *</i> <b>dest</b> — results receiver.
+* <i>char *</i> <b>completionTag</b> — points to a buffer of size COMPLETION_TAG_BUFSIZE 
+in which to store a command completion status string
