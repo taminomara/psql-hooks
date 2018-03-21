@@ -13,7 +13,7 @@ Provide description here
 
 
 
-* [emit_log_hook](Detailed.md#emit_log_hook) — Short description of this hook.
+* [emit_log_hook](Detailed.md#emit_log_hook) — Hook for intercepting messages before they are sent to the server log.
 * [shmem_startup_hook](Detailed.md#shmem_startup_hook) — Short description of this hook.
 
 ## [Security Hooks](Detailed.md#security-hooks)
