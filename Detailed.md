@@ -3,44 +3,21 @@
 Provide description here.
 
 * [General Hooks](#general-hooks)
-* [Function Manager Hooks](#function-manager-hooks)
-* [Optimiser Hooks](#optimiser-hooks)
+* [Security Hooks](#security-hooks)
+* [Planner Hooks](#planner-hooks)
 * [Executor Hooks](#executor-hooks)
-* [Utils Hooks](#utils-hooks)
+* [PL/pgsql Hooks](#pspgsql-hooks)
 
 
 ## General Hooks
 
-<a name="object_access_hook" href="#object_access_hook">#</a> <i>void</i> <b>object_access_hook</b>(access, classId, objectId, subId, arg) [<>](https://doxygen.postgresql.org/objectaccess_8h_source.html#l00127 "Source")
-
-Multi-pass hook to monitor accesses to objects.
-Can be triggered by the following entrypoints:\
-[RunFunctionExecuteHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a41ee35a449248c380c9a8fb0529bd4af)\
-[RunNamespaceSearchHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a6e3676b4278836b87b28148eb9d666fc)\
-[RunObjectDropHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a1b20ed6ac04157d8453802a07254ca90)\
-[RunObjectPostAlterHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a3250abdee32af9fcb65c2a5fc1a1b496)\
-[RunObjectPostCreateHook()](https://doxygen.postgresql.org/objectaccess_8c.html#acba44450c8b47e3fe01ff1df9eb1e409)
-
-*Inputs:*
-
-* <i>ObjectAccessType</i> <b>access</b> — access event type ([ref](https://doxygen.postgresql.org/objectaccess_8h.html#a9b9ef77e618c4d2025e0413a6fe214a0))
-* <i>Oid</i> <b>classId</b>
-* <i>Oid</i> <b>objectId</b>
-* <i>int</i> <b>subId</b>
-* <i>void *</i> <b>arg</b> — entrypoint-specific argument (optional)
-
-*Output:*
-
-Hook should not produce any output.
-
-*Use-cases:*
-
-Useful for security and logging extensions.
 
 
-<a name="ExplainOneQuery_hook" href="#ExplainOneQuery_hook">#</a> <i>void</i> <b>ExplainOneQuery_hook</b>(query, cursorOptions, into, es, queryString, params, queryEnv) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h#L58 "Source")
+
+<a name="emit_log_hook" href="#emit_log_hook">#</a> <i>void</i> <b>emit_log_hook</b>(edata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/elog.h#L375 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -49,13 +26,7 @@ what output is expected and (shortly) how postgres changes its behavior based on
 Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
 Are there any special input states? Can they be null (e.g. `nullptr`)?
 
-* <i>Query *</i> <b>query</b> — ...
-* <i>int</i> <b>cursorOptions</b> — ...
-* <i>IntoClause *</i> <b>into</b> — ...
-* <i>ExplainState *</i> <b>es</b> — ...
-* <i>const char *</i> <b>queryString</b> — ...
-* <i>ParamListInfo</i> <b>params</b> — ...
-* <i>QueryEnvironment *</i> <b>queryEnv</b> — ...
+* <i>ErrorData *</i> <b>edata</b> — ...
 
 *Output:*
 
@@ -68,34 +39,36 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="explain_get_index_name_hook" href="#explain_get_index_name_hook">#</a> <i>const char *</i> <b>explain_get_index_name_hook</b>(indexId) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h#L62 "Source")
+<a name="shmem_startup_hook" href="#shmem_startup_hook">#</a> <i>void</i> <b>shmem_startup_hook</b>() [<>](https://github.com/postgres/postgres/blob/master/src/include/storage/ipc.h#L77 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Oid</i> <b>indexId</b> — ...
-
+There are no inputs for this hook. Is there a global state this hook should introspect?
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
+This hook does not produce any output. Describe, what exactly it should do.
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
+Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
 
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
+## Security Hooks
+
+
+
+
 <a name="check_password_hook" href="#check_password_hook">#</a> <i>void</i> <b>check_password_hook</b>(username, shadow_pass, password_type, validuntil_time, validuntil_null) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/user.h#L25 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -124,6 +97,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 <a name="ClientAuthentication_hook" href="#ClientAuthentication_hook">#</a> <i>void</i> <b>ClientAuthentication_hook</b>(port, status) [<>](https://github.com/postgres/postgres/blob/master/src/include/libpq/auth.h#L27 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -146,9 +120,10 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="post_parse_analyze_hook" href="#post_parse_analyze_hook">#</a> <i>void</i> <b>post_parse_analyze_hook</b>(pstate, query) [<>](https://github.com/postgres/postgres/blob/master/src/include/parser/analyze.h#L22 "Source")
+<a name="ExecutorCheckPerms_hook" href="#ExecutorCheckPerms_hook">#</a> <i>bool</i> <b>ExecutorCheckPerms_hook</b>(rangeTabls, abort) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L90 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -157,8 +132,62 @@ what output is expected and (shortly) how postgres changes its behavior based on
 Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
 Are there any special input states? Can they be null (e.g. `nullptr`)?
 
-* <i>ParseState *</i> <b>pstate</b> — ...
-* <i>Query *</i> <b>query</b> — ...
+* <i>List *</i> <b>rangeTabls</b> — ...
+* <i>bool</i> <b>abort</b> — ...
+
+*Output:*
+
+Describe hook output. Are there any constraints for the output value?
+How postgres changes its behavior based on received output?
+Are there any special cases for output, e.g. returning `-1` or `nullptr`?
+Are there any mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="needs_fmgr_hook" href="#needs_fmgr_hook">#</a> <i>bool</i> <b>needs_fmgr_hook</b>(fn_oid) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L727 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>Oid</i> <b>fn_oid</b> — ...
+
+*Output:*
+
+Describe hook output. Are there any constraints for the output value?
+How postgres changes its behavior based on received output?
+Are there any special cases for output, e.g. returning `-1` or `nullptr`?
+Are there any mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="fmgr_hook" href="#fmgr_hook">#</a> <i>void</i> <b>fmgr_hook</b>(event, flinfo, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L728 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>FmgrHookEventType</i> <b>event</b> — ...
+* <i>FmgrInfo *</i> <b>flinfo</b> — ...
+* <i>Datum *</i> <b>arg</b> — ...
 
 *Output:*
 
@@ -171,9 +200,38 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
+<a name="object_access_hook" href="#object_access_hook">#</a> <i>void</i> <b>object_access_hook</b>(access, classId, objectId, subId, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/catalog/objectaccess.h#L127 "Source")
+
+Multi-pass hook to monitor accesses to objects.
+
+Can be triggered by the following entrypoints:\
+[RunFunctionExecuteHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a41ee35a449248c380c9a8fb0529bd4af)\
+[RunNamespaceSearchHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a6e3676b4278836b87b28148eb9d666fc)\
+[RunObjectDropHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a1b20ed6ac04157d8453802a07254ca90)\
+[RunObjectPostAlterHook()](https://doxygen.postgresql.org/objectaccess_8c.html#a3250abdee32af9fcb65c2a5fc1a1b496)\
+[RunObjectPostCreateHook()](https://doxygen.postgresql.org/objectaccess_8c.html#acba44450c8b47e3fe01ff1df9eb1e409)
+
+*Inputs:*
+
+* <i>ObjectAccessType</i> <b>access</b> — access event type ([ref](https://doxygen.postgresql.org/objectaccess_8h.html#a9b9ef77e618c4d2025e0413a6fe214a0))
+* <i>Oid</i> <b>classId</b>
+* <i>Oid</i> <b>objectId</b>
+* <i>int</i> <b>subId</b>
+* <i>void *</i> <b>arg</b> — entrypoint-specific argument (optional)
+
+*Output:*
+
+Hook should not produce any output.
+
+*Use-cases:*
+
+Useful for security and logging extensions.
+
+
 <a name="row_security_policy_hook_permissive" href="#row_security_policy_hook_permissive">#</a> <i>List *</i> <b>row_security_policy_hook_permissive</b>(cmdtype, relation) [<>](https://github.com/postgres/postgres/blob/master/src/include/rewrite/rowsecurity.h#L40 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -200,6 +258,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 <a name="row_security_policy_hook_restrictive" href="#row_security_policy_hook_restrictive">#</a> <i>List *</i> <b>row_security_policy_hook_restrictive</b>(cmdtype, relation) [<>](https://github.com/postgres/postgres/blob/master/src/include/rewrite/rowsecurity.h#L42 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -223,29 +282,15 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="shmem_startup_hook" href="#shmem_startup_hook">#</a> <i>void</i> <b>shmem_startup_hook</b>() [<>](https://github.com/postgres/postgres/blob/master/src/include/storage/ipc.h#L77 "Source")
+## Planner Hooks
+
+
+
+
+<a name="explain_get_index_name_hook" href="#explain_get_index_name_hook">#</a> <i>const char *</i> <b>explain_get_index_name_hook</b>(indexId) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h#L62 "Source")
 
 Short description of this hook.
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
 
-*Inputs:*
-
-There are no inputs for this hook. Is there a global state this hook should introspect?
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
-
-
-<a name="ProcessUtility_hook" href="#ProcessUtility_hook">#</a> <i>void</i> <b>ProcessUtility_hook</b>(pstmt, queryString, context, params, queryEnv, dest, completionTag) [<>](https://github.com/postgres/postgres/blob/master/src/include/tcop/utility.h#L32 "Source")
-
-Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -254,42 +299,7 @@ what output is expected and (shortly) how postgres changes its behavior based on
 Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
 Are there any special input states? Can they be null (e.g. `nullptr`)?
 
-* <i>PlannedStmt *</i> <b>pstmt</b> — ...
-* <i>const char *</i> <b>queryString</b> — ...
-* <i>ProcessUtilityContext</i> <b>context</b> — ...
-* <i>ParamListInfo</i> <b>params</b> — ...
-* <i>QueryEnvironment *</i> <b>queryEnv</b> — ...
-* <i>DestReceiver *</i> <b>dest</b> — ...
-* <i>char *</i> <b>completionTag</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
-
-
-## Function Manager Hooks
-
-Provide description here.
-
-
-<a name="needs_fmgr_hook" href="#needs_fmgr_hook">#</a> <i>bool</i> <b>needs_fmgr_hook</b>(fn_oid) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L727 "Source")
-
-Short description of this hook.
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
-
-*Inputs:*
-
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Oid</i> <b>fn_oid</b> — ...
+* <i>Oid</i> <b>indexId</b> — ...
 
 *Output:*
 
@@ -303,9 +313,10 @@ Are there any mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="fmgr_hook" href="#fmgr_hook">#</a> <i>void</i> <b>fmgr_hook</b>(event, flinfo, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L728 "Source")
+<a name="ExplainOneQuery_hook" href="#ExplainOneQuery_hook">#</a> <i>void</i> <b>ExplainOneQuery_hook</b>(query, cursorOptions, into, es, queryString, params, queryEnv) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h#L58 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -314,9 +325,13 @@ what output is expected and (shortly) how postgres changes its behavior based on
 Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
 Are there any special input states? Can they be null (e.g. `nullptr`)?
 
-* <i>FmgrHookEventType</i> <b>event</b> — ...
-* <i>FmgrInfo *</i> <b>flinfo</b> — ...
-* <i>Datum *</i> <b>arg</b> — ...
+* <i>Query *</i> <b>query</b> — ...
+* <i>int</i> <b>cursorOptions</b> — ...
+* <i>IntoClause *</i> <b>into</b> — ...
+* <i>ExplainState *</i> <b>es</b> — ...
+* <i>const char *</i> <b>queryString</b> — ...
+* <i>ParamListInfo</i> <b>params</b> — ...
+* <i>QueryEnvironment *</i> <b>queryEnv</b> — ...
 
 *Output:*
 
@@ -329,14 +344,179 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-## Optimiser Hooks
+<a name="get_attavgwidth_hook" href="#get_attavgwidth_hook">#</a> <i>int32</i> <b>get_attavgwidth_hook</b>(relid, attnum) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/lsyscache.h#L62 "Source")
 
-Provide description here.
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>Oid</i> <b>relid</b> — ...
+* <i>AttrNumber</i> <b>attnum</b> — ...
+
+*Output:*
+
+Describe hook output. Are there any constraints for the output value?
+How postgres changes its behavior based on received output?
+Are there any special cases for output, e.g. returning `-1` or `nullptr`?
+Are there any mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="get_index_stats_hook" href="#get_index_stats_hook">#</a> <i>bool</i> <b>get_index_stats_hook</b>(root, indexOid, indexattnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h#L151 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>PlannerInfo *</i> <b>root</b> — ...
+* <i>Oid</i> <b>indexOid</b> — ...
+* <i>AttrNumber</i> <b>indexattnum</b> — ...
+* <i>VariableStatData *</i> <b>vardata</b> — ...
+
+*Output:*
+
+Describe hook output. Are there any constraints for the output value?
+How postgres changes its behavior based on received output?
+Are there any special cases for output, e.g. returning `-1` or `nullptr`?
+Are there any mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="get_relation_info_hook" href="#get_relation_info_hook">#</a> <i>void</i> <b>get_relation_info_hook</b>(root, relationObjectId, inhparent, rel) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/plancat.h#L25 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>PlannerInfo *</i> <b>root</b> — ...
+* <i>Oid</i> <b>relationObjectId</b> — ...
+* <i>bool</i> <b>inhparent</b> — ...
+* <i>RelOptInfo *</i> <b>rel</b> — ...
+
+*Output:*
+
+This hook does not produce any output. Describe, what exactly it should do.
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
+Maybe, there are some mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="get_relation_stats_hook" href="#get_relation_stats_hook">#</a> <i>bool</i> <b>get_relation_stats_hook</b>(root, rte, attnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h#L146 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>PlannerInfo *</i> <b>root</b> — ...
+* <i>RangeTblEntry *</i> <b>rte</b> — ...
+* <i>AttrNumber</i> <b>attnum</b> — ...
+* <i>VariableStatData *</i> <b>vardata</b> — ...
+
+*Output:*
+
+Describe hook output. Are there any constraints for the output value?
+How postgres changes its behavior based on received output?
+Are there any special cases for output, e.g. returning `-1` or `nullptr`?
+Are there any mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="planner_hook" href="#planner_hook">#</a> <i>PlannedStmt *</i> <b>planner_hook</b>(parse, cursorOptions, boundParams) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L25 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>Query *</i> <b>parse</b> — ...
+* <i>int</i> <b>cursorOptions</b> — ...
+* <i>ParamListInfo</i> <b>boundParams</b> — ...
+
+*Output:*
+
+Describe hook output. Are there any constraints for the output value?
+How postgres changes its behavior based on received output?
+Are there any special cases for output, e.g. returning `-1` or `nullptr`?
+Are there any mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="join_search_hook" href="#join_search_hook">#</a> <i>RelOptInfo *</i> <b>join_search_hook</b>(root, levels_needed, initial_rels) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L48 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>PlannerInfo *</i> <b>root</b> — ...
+* <i>int</i> <b>levels_needed</b> — ...
+* <i>List *</i> <b>initial_rels</b> — ...
+
+*Output:*
+
+Describe hook output. Are there any constraints for the output value?
+How postgres changes its behavior based on received output?
+Are there any special cases for output, e.g. returning `-1` or `nullptr`?
+Are there any mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
 <a name="set_rel_pathlist_hook" href="#set_rel_pathlist_hook">#</a> <i>void</i> <b>set_rel_pathlist_hook</b>(root, rel, rti, rte) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L33 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -364,6 +544,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 <a name="set_join_pathlist_hook" href="#set_join_pathlist_hook">#</a> <i>void</i> <b>set_join_pathlist_hook</b>(root, joinrel, outerrel, innerrel, jointype, extra) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L42 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -390,90 +571,10 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="join_search_hook" href="#join_search_hook">#</a> <i>RelOptInfo *</i> <b>join_search_hook</b>(root, levels_needed, initial_rels) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L48 "Source")
-
-Short description of this hook.
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
-
-*Inputs:*
-
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>int</i> <b>levels_needed</b> — ...
-* <i>List *</i> <b>initial_rels</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
-
-
-<a name="get_relation_info_hook" href="#get_relation_info_hook">#</a> <i>void</i> <b>get_relation_info_hook</b>(root, relationObjectId, inhparent, rel) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/plancat.h#L25 "Source")
-
-Short description of this hook.
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
-
-*Inputs:*
-
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>Oid</i> <b>relationObjectId</b> — ...
-* <i>bool</i> <b>inhparent</b> — ...
-* <i>RelOptInfo *</i> <b>rel</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
-
-
-<a name="planner_hook" href="#planner_hook">#</a> <i>PlannedStmt *</i> <b>planner_hook</b>(parse, cursorOptions, boundParams) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L25 "Source")
-
-Short description of this hook.
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
-
-*Inputs:*
-
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Query *</i> <b>parse</b> — ...
-* <i>int</i> <b>cursorOptions</b> — ...
-* <i>ParamListInfo</i> <b>boundParams</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
-
-
 <a name="create_upper_paths_hook" href="#create_upper_paths_hook">#</a> <i>void</i> <b>create_upper_paths_hook</b>(root, stage, input_rel, output_rel) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L32 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -498,14 +599,41 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
+<a name="post_parse_analyze_hook" href="#post_parse_analyze_hook">#</a> <i>void</i> <b>post_parse_analyze_hook</b>(pstate, query) [<>](https://github.com/postgres/postgres/blob/master/src/include/parser/analyze.h#L22 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>ParseState *</i> <b>pstate</b> — ...
+* <i>Query *</i> <b>query</b> — ...
+
+*Output:*
+
+This hook does not produce any output. Describe, what exactly it should do.
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
+Maybe, there are some mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
 ## Executor Hooks
 
-Provide description here.
+
 
 
 <a name="ExecutorStart_hook" href="#ExecutorStart_hook">#</a> <i>void</i> <b>ExecutorStart_hook</b>(queryDesc, eflags) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L71 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -531,6 +659,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 <a name="ExecutorRun_hook" href="#ExecutorRun_hook">#</a> <i>void</i> <b>ExecutorRun_hook</b>(queryDesc, direction, count, execute_once) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L78 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -558,6 +687,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 <a name="ExecutorFinish_hook" href="#ExecutorFinish_hook">#</a> <i>void</i> <b>ExecutorFinish_hook</b>(queryDesc) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L82 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -582,6 +712,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 <a name="ExecutorEnd_hook" href="#ExecutorEnd_hook">#</a> <i>void</i> <b>ExecutorEnd_hook</b>(queryDesc) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L86 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -603,9 +734,10 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="ExecutorCheckPerms_hook" href="#ExecutorCheckPerms_hook">#</a> <i>bool</i> <b>ExecutorCheckPerms_hook</b>(rangeTabls, abort) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L90 "Source")
+<a name="ProcessUtility_hook" href="#ProcessUtility_hook">#</a> <i>void</i> <b>ProcessUtility_hook</b>(pstmt, queryString, context, params, queryEnv, dest, completionTag) [<>](https://github.com/postgres/postgres/blob/master/src/include/tcop/utility.h#L32 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -614,38 +746,13 @@ what output is expected and (shortly) how postgres changes its behavior based on
 Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
 Are there any special input states? Can they be null (e.g. `nullptr`)?
 
-* <i>List *</i> <b>rangeTabls</b> — ...
-* <i>bool</i> <b>abort</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
-
-
-## Utils Hooks
-
-Provide description here.
-
-
-<a name="emit_log_hook" href="#emit_log_hook">#</a> <i>void</i> <b>emit_log_hook</b>(edata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/elog.h#L375 "Source")
-
-Short description of this hook.
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
-
-*Inputs:*
-
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>ErrorData *</i> <b>edata</b> — ...
+* <i>PlannedStmt *</i> <b>pstmt</b> — ...
+* <i>const char *</i> <b>queryString</b> — ...
+* <i>ProcessUtilityContext</i> <b>context</b> — ...
+* <i>ParamListInfo</i> <b>params</b> — ...
+* <i>QueryEnvironment *</i> <b>queryEnv</b> — ...
+* <i>DestReceiver *</i> <b>dest</b> — ...
+* <i>char *</i> <b>completionTag</b> — ...
 
 *Output:*
 
@@ -658,9 +765,15 @@ Maybe, there are some mutable inputs this hook should change?
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="get_attavgwidth_hook" href="#get_attavgwidth_hook">#</a> <i>int32</i> <b>get_attavgwidth_hook</b>(relid, attnum) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/lsyscache.h#L62 "Source")
+## PL/pgsql Hooks
+
+
+
+
+<a name="func_setup" href="#func_setup">#</a> <i>void</i> <b>func_setup</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1071 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -669,24 +782,24 @@ what output is expected and (shortly) how postgres changes its behavior based on
 Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
 Are there any special input states? Can they be null (e.g. `nullptr`)?
 
-* <i>Oid</i> <b>relid</b> — ...
-* <i>AttrNumber</i> <b>attnum</b> — ...
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
+* <i>PLpgSQL_function *</i> <b>func</b> — ...
 
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
+This hook does not produce any output. Describe, what exactly it should do.
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
+Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
 
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="get_relation_stats_hook" href="#get_relation_stats_hook">#</a> <i>bool</i> <b>get_relation_stats_hook</b>(root, rte, attnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h#L146 "Source")
+<a name="func_beg" href="#func_beg">#</a> <i>void</i> <b>func_beg</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1072 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -695,26 +808,24 @@ what output is expected and (shortly) how postgres changes its behavior based on
 Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
 Are there any special input states? Can they be null (e.g. `nullptr`)?
 
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>RangeTblEntry *</i> <b>rte</b> — ...
-* <i>AttrNumber</i> <b>attnum</b> — ...
-* <i>VariableStatData *</i> <b>vardata</b> — ...
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
+* <i>PLpgSQL_function *</i> <b>func</b> — ...
 
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
+This hook does not produce any output. Describe, what exactly it should do.
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
+Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
 
 It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
-<a name="get_index_stats_hook" href="#get_index_stats_hook">#</a> <i>bool</i> <b>get_index_stats_hook</b>(root, indexOid, indexattnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h#L151 "Source")
+<a name="func_end" href="#func_end">#</a> <i>void</i> <b>func_end</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1073 "Source")
 
 Short description of this hook.
+
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 
@@ -723,17 +834,66 @@ what output is expected and (shortly) how postgres changes its behavior based on
 Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
 Are there any special input states? Can they be null (e.g. `nullptr`)?
 
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>Oid</i> <b>indexOid</b> — ...
-* <i>AttrNumber</i> <b>indexattnum</b> — ...
-* <i>VariableStatData *</i> <b>vardata</b> — ...
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
+* <i>PLpgSQL_function *</i> <b>func</b> — ...
 
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
+This hook does not produce any output. Describe, what exactly it should do.
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
+Maybe, there are some mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="stmt_beg" href="#stmt_beg">#</a> <i>void</i> <b>stmt_beg</b>(estate, stmt) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1074 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
+* <i>PLpgSQL_stmt *</i> <b>stmt</b> — ...
+
+*Output:*
+
+This hook does not produce any output. Describe, what exactly it should do.
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
+Maybe, there are some mutable inputs this hook should change?
+
+*Use-cases:*
+
+It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+
+
+<a name="stmt_end" href="#stmt_end">#</a> <i>void</i> <b>stmt_end</b>(estate, stmt) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql.h#L1075 "Source")
+
+Short description of this hook.
+
+Remember to mention when it's called, what should it do, what inputs supplied to this hook,
+what output is expected and (shortly) how postgres changes its behavior based on received output.
+
+*Inputs:*
+
+Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
+Are there any special input states? Can they be null (e.g. `nullptr`)?
+
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
+* <i>PLpgSQL_stmt *</i> <b>stmt</b> — ...
+
+*Output:*
+
+This hook does not produce any output. Describe, what exactly it should do.
+Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
+Maybe, there are some mutable inputs this hook should change?
 
 *Use-cases:*
 

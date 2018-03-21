@@ -1,11 +1,13 @@
 from collections import namedtuple
 
+import os
+
 import jinja2
 
 HookType = namedtuple('HookType', 'name output inputs')
 HookInput = namedtuple('HookInput', 'type name')
 Hook = namedtuple('Hook', 'type name source_link')
-HookSection = namedtuple('HookSection', 'name slug hooks')
+HookSection = namedtuple('HookSection', 'name slug short_desc long_desc hooks')
 
 
 def link(path):
@@ -248,27 +250,48 @@ get_index_stats_hook_type = HookType(
         HookInput('VariableStatData *', 'vardata'),
     ]
 )
+func_hook_type = HookType(
+    name='func_hook_type',
+    output='void',
+    inputs=[
+        HookInput('PLpgSQL_execstate *', 'estate'),
+        HookInput('PLpgSQL_function *', 'func'),
+    ]
+)
+stmt_hook_type = HookType(
+    name='stmt_hook_type',
+    output='void',
+    inputs=[
+        HookInput('PLpgSQL_execstate *', 'estate'),
+        HookInput('PLpgSQL_stmt *', 'stmt'),
+    ]
+)
 
 sections = [
     HookSection(
         'General Hooks',
         'general-hooks',
+        '',
+        '',
         [
             Hook(
-                object_access_hook_type,
-                'object_access_hook',
-                link('src/include/catalog/objectaccess.h#L127')
+                emit_log_hook_type,
+                'emit_log_hook',
+                link('src/include/utils/elog.h#L375')
             ),
             Hook(
-                ExplainOneQuery_hook_type,
-                'ExplainOneQuery_hook',
-                link('src/include/commands/explain.h#L58')
+                shmem_startup_hook_type,
+                'shmem_startup_hook',
+                link('src/include/storage/ipc.h#L77')
             ),
-            Hook(
-                explain_get_index_name_hook_type,
-                'explain_get_index_name_hook',
-                link('src/include/commands/explain.h#L62')
-            ),
+        ]
+    ),
+    HookSection(
+        'Security Hooks',
+        'security-hooks',
+        '',
+        '',
+        [
             Hook(
                 check_password_hook_type,
                 'check_password_hook',
@@ -280,9 +303,24 @@ sections = [
                 link('src/include/libpq/auth.h#L27')
             ),
             Hook(
-                post_parse_analyze_hook_type,
-                'post_parse_analyze_hook',
-                link('src/include/parser/analyze.h#L22')
+                ExecutorCheckPerms_hook_type,
+                'ExecutorCheckPerms_hook',
+                link('src/include/executor/executor.h#L90')
+            ),
+            Hook(
+                needs_fmgr_hook_type,
+                'needs_fmgr_hook',
+                link('src/include/fmgr.h#L727')
+            ),
+            Hook(
+                fmgr_hook_type,
+                'fmgr_hook',
+                link('src/include/fmgr.h#L728')
+            ),
+            Hook(
+                object_access_hook_type,
+                'object_access_hook',
+                link('src/include/catalog/objectaccess.h#L127')
             ),
             Hook(
                 row_security_policy_hook_type,
@@ -294,52 +332,33 @@ sections = [
                 'row_security_policy_hook_restrictive',
                 link('src/include/rewrite/rowsecurity.h#L42')
             ),
-            Hook(
-                shmem_startup_hook_type,
-                'shmem_startup_hook',
-                link('src/include/storage/ipc.h#L77')
-            ),
-            Hook(
-                ProcessUtility_hook_type,
-                'ProcessUtility_hook',
-                link('src/include/tcop/utility.h#L32')
-            ),
-        ],
+        ]
     ),
     HookSection(
-        'Function Manager Hooks',
-        'function-manager-hooks',
+        'Planner Hooks',
+        'planner-hooks',
+        '',
+        '',
         [
             Hook(
-                needs_fmgr_hook_type,
-                'needs_fmgr_hook',
-                link('src/include/fmgr.h#L727')
+                explain_get_index_name_hook_type,
+                'explain_get_index_name_hook',
+                link('src/include/commands/explain.h#L62')
             ),
             Hook(
-                fmgr_hook_type,
-                'fmgr_hook',
-                link('src/include/fmgr.h#L728')
-            ),
-        ],
-    ),
-    HookSection(
-        'Optimiser Hooks',
-        'optimiser-hooks',
-        [
-            Hook(
-                set_rel_pathlist_hook_type,
-                'set_rel_pathlist_hook',
-                link('src/include/optimizer/paths.h#L33')
+                ExplainOneQuery_hook_type,
+                'ExplainOneQuery_hook',
+                link('src/include/commands/explain.h#L58')
             ),
             Hook(
-                set_join_pathlist_hook_type,
-                'set_join_pathlist_hook',
-                link('src/include/optimizer/paths.h#L42')
+                get_attavgwidth_hook_type,
+                'get_attavgwidth_hook',
+                link('src/include/utils/lsyscache.h#L62')
             ),
             Hook(
-                join_search_hook_type,
-                'join_search_hook',
-                link('src/include/optimizer/paths.h#L48')
+                get_index_stats_hook_type,
+                'get_index_stats_hook',
+                link('src/include/utils/selfuncs.h#L151')
             ),
             Hook(
                 get_relation_info_hook_type,
@@ -347,20 +366,47 @@ sections = [
                 link('src/include/optimizer/plancat.h#L25')
             ),
             Hook(
+                get_relation_stats_hook_type,
+                'get_relation_stats_hook',
+                link('src/include/utils/selfuncs.h#L146')
+            ),
+            Hook(
                 planner_hook_type,
                 'planner_hook',
                 link('src/include/optimizer/planner.h#L25')
             ),
             Hook(
+                join_search_hook_type,
+                'join_search_hook',
+                link('src/include/optimizer/paths.h#L48')
+            ),
+            Hook(  # TODO: does it really belongs to this section
+                set_rel_pathlist_hook_type,
+                'set_rel_pathlist_hook',
+                link('src/include/optimizer/paths.h#L33')
+            ),
+            Hook(  # TODO: does it really belongs to this section
+                set_join_pathlist_hook_type,
+                'set_join_pathlist_hook',
+                link('src/include/optimizer/paths.h#L42')
+            ),
+            Hook(  # TODO: does it really belongs to this section
                 create_upper_paths_hook_type,
                 'create_upper_paths_hook',
                 link('src/include/optimizer/planner.h#L32')
             ),
-        ],
+            Hook(  # TODO: does it really belongs to this section
+                post_parse_analyze_hook_type,
+                'post_parse_analyze_hook',
+                link('src/include/parser/analyze.h#L22')
+            ),
+        ]
     ),
     HookSection(
         'Executor Hooks',
         'executor-hooks',
+        '',
+        '',
         [
             Hook(
                 ExecutorStart_hook_type,
@@ -383,47 +429,97 @@ sections = [
                 link('src/include/executor/executor.h#L86')
             ),
             Hook(
-                ExecutorCheckPerms_hook_type,
-                'ExecutorCheckPerms_hook',
-                link('src/include/executor/executor.h#L90')
+                ProcessUtility_hook_type,
+                'ProcessUtility_hook',
+                link('src/include/tcop/utility.h#L32')
             ),
-        ],
+        ]
     ),
     HookSection(
-        'Utils Hooks',
-        'utils-hooks',
+        'PL/pgsql Hooks',
+        'pspgsql-hooks',
+        '',
+        '',
         [
             Hook(
-                emit_log_hook_type,
-                'emit_log_hook',
-                link('src/include/utils/elog.h#L375')
+                func_hook_type,
+                'func_setup',
+                link('src/pl/plpgsql.h#L1071')
             ),
             Hook(
-                get_attavgwidth_hook_type,
-                'get_attavgwidth_hook',
-                link('src/include/utils/lsyscache.h#L62')
+                func_hook_type,
+                'func_beg',
+                link('src/pl/plpgsql.h#L1072')
             ),
             Hook(
-                get_relation_stats_hook_type,
-                'get_relation_stats_hook',
-                link('src/include/utils/selfuncs.h#L146')
+                func_hook_type,
+                'func_end',
+                link('src/pl/plpgsql.h#L1073')
             ),
             Hook(
-                get_index_stats_hook_type,
-                'get_index_stats_hook',
-                link('src/include/utils/selfuncs.h#L151')
+                stmt_hook_type,
+                'stmt_beg',
+                link('src/pl/plpgsql.h#L1074')
             ),
-        ],
+            Hook(
+                stmt_hook_type,
+                'stmt_end',
+                link('src/pl/plpgsql.h#L1075')
+            ),
+        ]
     ),
 ]
 
-if __name__ == '__main__':
-    with open('Readme.md.in', encoding='utf-8') as template_text:
-        template = jinja2.Template(template_text.read())
-        with open('Readme.generated.md', 'w', encoding='utf-8') as f:
-            f.write(template.render(sections=sections))
 
-    with open('Detailed.md.in', encoding='utf-8') as template_text:
-        template = jinja2.Template(template_text.read())
-        with open('Detailed.generated.md', 'w', encoding='utf-8') as f:
-            f.write(template.render(sections=sections))
+def make_short_description(hook):
+    path = 'templates/hooks/' + hook.name + '.md'
+
+    if not os.path.exists(path):
+        return ''
+
+    with open(path, encoding='utf-8') as hook_text:
+        for line in hook_text:
+            line = line.strip()
+            if line:
+                return line
+
+
+def move_before_generation(output_path):
+    if not os.path.exists(output_path):
+        return
+
+    path, ext = os.path.splitext(output_path)
+
+    i = 1
+    while os.path.exists(path + '.old.' + str(i) + ext):
+        i += 1
+
+    os.rename(output_path, path + '.old.' + str(i) + ext)
+
+
+def write_template(template_path, output_path, **context):
+    with open(template_path, encoding='utf-8') as template_text:
+        environment = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
+        environment.globals['make_short_description'] = make_short_description
+        template = environment.from_string(template_text.read())
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(template.render(**context))
+
+
+def main():
+    for section in sections:
+        for hook in section.hooks:
+            path = 'templates/hooks/' + hook.name + '.md'
+            if os.path.exists(path):
+                continue
+            write_template('templates/Hook.md', path, hook=hook)
+
+    move_before_generation('Readme.md')
+    write_template('templates/Readme.md', 'Readme.md', sections=sections)
+
+    move_before_generation('Detailed.md')
+    write_template('templates/Detailed.md', 'Detailed.md', sections=sections)
+
+
+if __name__ == '__main__':
+    main()
