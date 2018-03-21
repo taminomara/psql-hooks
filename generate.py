@@ -7,7 +7,7 @@ import jinja2
 HookType = namedtuple('HookType', 'name output inputs')
 HookInput = namedtuple('HookInput', 'type name')
 Hook = namedtuple('Hook', 'type name source_link')
-HookSection = namedtuple('HookSection', 'name slug hooks')
+HookSection = namedtuple('HookSection', 'name slug short_desc long_desc hooks')
 
 
 def link(path):
@@ -255,6 +255,8 @@ sections = [
     HookSection(
         'General Hooks',
         'general-hooks',
+        'Short description',
+        'Long description',
         [
             Hook(
                 object_access_hook_type,
@@ -311,6 +313,8 @@ sections = [
     HookSection(
         'Function Manager Hooks',
         'function-manager-hooks',
+        'Short description',
+        'Long description',
         [
             Hook(
                 needs_fmgr_hook_type,
@@ -327,6 +331,8 @@ sections = [
     HookSection(
         'Optimiser Hooks',
         'optimiser-hooks',
+        'Short description',
+        'Long description',
         [
             Hook(
                 set_rel_pathlist_hook_type,
@@ -363,6 +369,8 @@ sections = [
     HookSection(
         'Executor Hooks',
         'executor-hooks',
+        'Short description',
+        'Long description',
         [
             Hook(
                 ExecutorStart_hook_type,
@@ -394,6 +402,8 @@ sections = [
     HookSection(
         'Utils Hooks',
         'utils-hooks',
+        'Short description',
+        'Long description',
         [
             Hook(
                 emit_log_hook_type,

@@ -1,6 +1,6 @@
 # Postgresql hooks documentation
 
-Provide description here.
+Provide description here
 
 * [General Hooks](#general-hooks)
 * [Function Manager Hooks](#function-manager-hooks)
@@ -11,7 +11,7 @@ Provide description here.
 
 ## [General Hooks](Detailed.md#general-hooks)
 
-Provide description here.
+Short description
 
 * [object_access_hook](Detailed.md#object_access_hook) — Multi-pass hook to monitor accesses to objects.
 * [ExplainOneQuery_hook](Detailed.md#ExplainOneQuery_hook) — Short description of this hook.
@@ -26,14 +26,14 @@ Provide description here.
 
 ## [Function Manager Hooks](Detailed.md#function-manager-hooks)
 
-Provide description here.
+Short description
 
 * [needs_fmgr_hook](Detailed.md#needs_fmgr_hook) — Short description of this hook.
 * [fmgr_hook](Detailed.md#fmgr_hook) — Short description of this hook.
 
 ## [Optimiser Hooks](Detailed.md#optimiser-hooks)
 
-Provide description here.
+Short description
 
 * [set_rel_pathlist_hook](Detailed.md#set_rel_pathlist_hook) — Short description of this hook.
 * [set_join_pathlist_hook](Detailed.md#set_join_pathlist_hook) — Short description of this hook.
@@ -44,7 +44,7 @@ Provide description here.
 
 ## [Executor Hooks](Detailed.md#executor-hooks)
 
-Provide description here.
+Short description
 
 * [ExecutorStart_hook](Detailed.md#ExecutorStart_hook) — Short description of this hook.
 * [ExecutorRun_hook](Detailed.md#ExecutorRun_hook) — Short description of this hook.
@@ -54,7 +54,7 @@ Provide description here.
 
 ## [Utils Hooks](Detailed.md#utils-hooks)
 
-Provide description here.
+Short description
 
 * [emit_log_hook](Detailed.md#emit_log_hook) — Short description of this hook.
 * [get_attavgwidth_hook](Detailed.md#get_attavgwidth_hook) — Short description of this hook.

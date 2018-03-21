@@ -1,6 +1,6 @@
 # Postgresql hooks documentation
 
-Provide description here.
+{% include "templates/Header.md" %}
 
 {% for section in sections -%}
 * [{{ section.name }}](#{{ section.slug }})
@@ -9,7 +9,7 @@ Provide description here.
 {% for section in sections -%}
 ## [{{ section.name }}](Detailed.md#{{ section.slug }})
 
-Provide description here.
+{{ section.short_desc }}
 
 {% for hook in section.hooks -%}
 * [{{ hook.name }}](Detailed.md#{{ hook.name }}) — {{ make_short_description(hook) }}

@@ -11,7 +11,7 @@ Provide description here.
 
 ## General Hooks
 
-Provide description here.
+Long description
 
 
 <a name="object_access_hook" href="#object_access_hook">#</a> <i>void</i> <b>object_access_hook</b>(access, classId, objectId, subId, arg) [<>](https://github.com/postgres/postgres/blob/master/src/include/catalog/objectaccess.h#L127 "Source")
@@ -288,7 +288,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 
 ## Function Manager Hooks
 
-Provide description here.
+Long description
 
 
 <a name="needs_fmgr_hook" href="#needs_fmgr_hook">#</a> <i>bool</i> <b>needs_fmgr_hook</b>(fn_oid) [<>](https://github.com/postgres/postgres/blob/master/src/include/fmgr.h#L727 "Source")
@@ -346,7 +346,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 
 ## Optimiser Hooks
 
-Provide description here.
+Long description
 
 
 <a name="set_rel_pathlist_hook" href="#set_rel_pathlist_hook">#</a> <i>void</i> <b>set_rel_pathlist_hook</b>(root, rel, rti, rte) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L33 "Source")
@@ -521,7 +521,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 
 ## Executor Hooks
 
-Provide description here.
+Long description
 
 
 <a name="ExecutorStart_hook" href="#ExecutorStart_hook">#</a> <i>void</i> <b>ExecutorStart_hook</b>(queryDesc, eflags) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L71 "Source")
@@ -657,7 +657,7 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 
 ## Utils Hooks
 
-Provide description here.
+Long description
 
 
 <a name="emit_log_hook" href="#emit_log_hook">#</a> <i>void</i> <b>emit_log_hook</b>(edata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/elog.h#L375 "Source")
