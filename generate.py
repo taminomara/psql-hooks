@@ -421,7 +421,7 @@ sections = [
 
 
 def make_short_description(hook):
-    path = 'hooks/' + hook.name + '.md'
+    path = 'templates/hooks/' + hook.name + '.md'
 
     if not os.path.exists(path):
         return ''
@@ -458,16 +458,16 @@ def write_template(template_path, output_path, **context):
 def main():
     for section in sections:
         for hook in section.hooks:
-            path = 'hooks/' + hook.name + '.md'
+            path = 'templates/hooks/' + hook.name + '.md'
             if os.path.exists(path):
                 continue
-            write_template('templates/Hook.md.in', path, hook=hook)
+            write_template('templates/Hook.md', path, hook=hook)
 
     move_before_generation('Readme.md')
-    write_template('templates/Readme.md.in', 'Readme.md', sections=sections)
+    write_template('templates/Readme.md', 'Readme.md', sections=sections)
 
     move_before_generation('Detailed.md')
-    write_template('templates/Detailed.md.in', 'Detailed.md', sections=sections)
+    write_template('templates/Detailed.md', 'Detailed.md', sections=sections)
 
 
 if __name__ == '__main__':
