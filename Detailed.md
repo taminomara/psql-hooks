@@ -154,8 +154,7 @@ There are several types of actions defined in `ObjectAccessType`:
 Typically, this is done after inserting the primary catalog records and
 associated dependencies.
 
-`OAT_DROP`: hook is invoked just before deletion of objects; typically
-deleteOneObject(). Its arguments are packed within ObjectAccessDrop.
+`OAT_DROP`: hook is invoked just before deletion of objects.
 
 `OAT_POST_ALTER`: hook is invoked just after the object is altered,
 but before the command counter is incremented. An extension using the
@@ -224,56 +223,33 @@ For `OAT_FUNCTION_EXECUTE` type, `subId` and `arg` are unused, and
 
 <a name="row_security_policy_hook_permissive" href="#row_security_policy_hook_permissive">#</a> <i>List *</i> <b>row_security_policy_hook_permissive</b>(cmdtype, relation) [<>](https://github.com/postgres/postgres/blob/master/src/include/rewrite/rowsecurity.h#L40 "Source")
 
-Short description of this hook.
+Hook to add policies which are combined with the other permissive policies, using OR.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook, along with the `row_security_policy_hook_restrictive`, allows adding
+custom security policies. It is called to build a list of policies for the given
+command applied to the given relation.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>CmdType</i> <b>cmdtype</b> — ...
-* <i>Relation</i> <b>relation</b> — ...
+* <i>CmdType</i> <b>cmdtype</b> — command type.
+* <i>Relation</i> <b>relation</b> — relation id.
 
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+List of additional permissive policies that will be added to the list of
+default permissive policies.
 
 
 <a name="row_security_policy_hook_restrictive" href="#row_security_policy_hook_restrictive">#</a> <i>List *</i> <b>row_security_policy_hook_restrictive</b>(cmdtype, relation) [<>](https://github.com/postgres/postgres/blob/master/src/include/rewrite/rowsecurity.h#L42 "Source")
 
-Short description of this hook.
+Hook to add policies which are enforced, regardless of other policies.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+See `row_security_policy_hook_permissive` for a detailed description.
 
-*Inputs:*
-
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>CmdType</i> <b>cmdtype</b> — ...
-* <i>Relation</i> <b>relation</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+Unlike for permissive policies, postgres guarantees that restrictive policies
+will be executed in a predefined order. That is, first postgres executes the
+default policies sorted by their name, than postgres executes custom policies,
+also sorted by their name.
 
 
 ## Function Manager Hooks

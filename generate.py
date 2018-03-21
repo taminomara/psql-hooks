@@ -388,17 +388,17 @@ sections = [
                 'join_search_hook',
                 link('src/include/optimizer/paths.h#L48')
             ),
-            Hook(  # TODO: does it really belongs to this section
+            Hook(  # TODO: does it really belong to this section?
                 set_rel_pathlist_hook_type,
                 'set_rel_pathlist_hook',
                 link('src/include/optimizer/paths.h#L33')
             ),
-            Hook(  # TODO: does it really belongs to this section
+            Hook(  # TODO: does it really belong to this section?
                 set_join_pathlist_hook_type,
                 'set_join_pathlist_hook',
                 link('src/include/optimizer/paths.h#L42')
             ),
-            Hook(  # TODO: does it really belongs to this section
+            Hook(  # TODO: does it really belong to this section?
                 create_upper_paths_hook_type,
                 'create_upper_paths_hook',
                 link('src/include/optimizer/planner.h#L32')

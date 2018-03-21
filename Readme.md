@@ -25,8 +25,8 @@ Provide description here
 * [ClientAuthentication_hook](Detailed.md#ClientAuthentication_hook) — hook for plugins to control the authentication process.
 * [ExecutorCheckPerms_hook](Detailed.md#ExecutorCheckPerms_hook) — hook for adding additional security checks on the per-relation level.
 * [object_access_hook](Detailed.md#object_access_hook) — hook to monitor accesses to objects.
-* [row_security_policy_hook_permissive](Detailed.md#row_security_policy_hook_permissive) — short description of this hook.
-* [row_security_policy_hook_restrictive](Detailed.md#row_security_policy_hook_restrictive) — short description of this hook.
+* [row_security_policy_hook_permissive](Detailed.md#row_security_policy_hook_permissive) — hook to add policies which are combined with the other permissive policies, using OR.
+* [row_security_policy_hook_restrictive](Detailed.md#row_security_policy_hook_restrictive) — hook to add policies which are enforced, regardless of other policies.
 
 ## [Function Manager Hooks](Detailed.md#function-manager-hooks)
 

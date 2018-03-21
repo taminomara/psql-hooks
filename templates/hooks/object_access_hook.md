@@ -10,8 +10,7 @@ There are several types of actions defined in `ObjectAccessType`:
 Typically, this is done after inserting the primary catalog records and
 associated dependencies.
 
-`OAT_DROP`: hook is invoked just before deletion of objects; typically
-deleteOneObject(). Its arguments are packed within ObjectAccessDrop.
+`OAT_DROP`: hook is invoked just before deletion of objects.
 
 `OAT_POST_ALTER`: hook is invoked just after the object is altered,
 but before the command counter is incremented. An extension using the
