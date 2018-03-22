@@ -59,6 +59,8 @@ void _PG_init(void)
 
 ```
 
+## Table of contents
+
 * [General Hooks](#general-hooks)
 * [Security Hooks](#security-hooks)
 * [Function Manager Hooks](#function-manager-hooks)

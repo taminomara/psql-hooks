@@ -2,6 +2,8 @@
 
 {% include "templates/DetailedHeader.md" %}
 
+## Table of contents
+
 {% for section in sections -%}
 * [{{ section.name }}](#{{ section.slug }})
 {% endfor %}

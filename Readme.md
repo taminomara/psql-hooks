@@ -15,7 +15,7 @@ Unofficial documentation for PostgreSQL hooks.
 > 
 > *Copyright notice:*
 > 
-> This work combines some research made to this repo by all contributors with
+> This work combines some research made by contributors with
 > information acquired from the postgres source code, comments and
 > documentation. Some contents of this work were copied from source code
 > comments as is, others were written from scratch.
