@@ -17,10 +17,13 @@ interface.
 A usual setup would include saving the previous value of the hook variable
 and writing pointer to a handler defined by extension.
 
-Saving the previous value is important because another excension could've
+Saving the previous value is important because another extension could've
 registered its own hook handler. If that's the case, we'd like to call it in
 our hook so that this extension can operate without errors. Any well-designed
 plugin will do such hook chaining.
+
+To pop the state of the hook created by one extension `_PG_fini` function must be implemented, 
+which is basically recovers hook to it's value before `_PG_init`.
 
 A standard example on how to use hooks is the `auth_delay` plugin.
 This plugin delays error report in case of user authentication failure,
@@ -53,6 +56,14 @@ void _PG_init(void)
 	original_client_auth_hook = ClientAuthentication_hook;
 	// Register our handler.
 	ClientAuthentication_hook = auth_delay_checks;
+}
+
+// Called with extension unload.
+void _PG_fini(void)
+{
+	
+    // Return back the original hook value.
+    	ClientAuthentication_hook = original_client_auth_hook;
 }
 
 ```
