@@ -1,7 +1,5 @@
 Unofficial documentation for PostgreSQL hooks.
 
-----
-
 > *Denial of responsibility:*
 > 
 > This work is not a part of the official PostgreSQL documentation.
@@ -25,8 +23,6 @@ Unofficial documentation for PostgreSQL hooks.
 >
 > This work is distributed under the terms of the PostgreSQL License, a copy of
 > which may be found in the file called 'License.md'.
-
-----
 
 PostgreSQL hooks are a simple way to extend functionality of the database.
 They allow extensions to introspect database state, react to events and
