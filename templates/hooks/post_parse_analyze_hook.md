@@ -1,22 +1,10 @@
-Short description of this hook.
+Called when parse analyze goes, right after performing transformTopLevelStmt().
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Used in several internal methods: 
+[pg_analyze_and_rewrite_params()](https://github.com/postgres/postgres/blob/src/backend/tcop/postgres.c#L686), 
+[parse_analyze()](https://github.com/postgres/postgres/blob/src/backend/parser/analyze.c#L100).
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>ParseState *</i> <b>pstate</b> — ...
-* <i>Query *</i> <b>query</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>ParseState *</i> <b>pstate</b> — parse state filled by query_string and queryEnv.  
+* <i>Query *</i> <b>query</b> — output result of the transformTopLevelStmt().
