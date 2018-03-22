@@ -448,170 +448,87 @@ See `get_index_stats_hook` for more details.
 
 <a name="planner_hook" href="#planner_hook">#</a> <i>PlannedStmt *</i> <b>planner_hook</b>(parse, cursorOptions, boundParams) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L25 "Source")
 
-Short description of this hook.
+Called in query optimizer entry point.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+If set, replaces standard planner. Consider inclusion of the standard planner to hook 
+if this hook assuming just pre-process or post-process for builtin planner.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Query *</i> <b>parse</b> — ...
-* <i>int</i> <b>cursorOptions</b> — ...
-* <i>ParamListInfo</i> <b>boundParams</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>Query *</i> <b>parse</b> — query text.
+* <i>int</i> <b>cursorOptions</b>
+* <i>ParamListInfo</i> <b>boundParams</b>
 
 
 <a name="join_search_hook" href="#join_search_hook">#</a> <i>RelOptInfo *</i> <b>join_search_hook</b>(root, levels_needed, initial_rels) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L48 "Source")
 
-Short description of this hook.
+Called when optimiser chooses order for join relations.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+When the hook is set, replaces GEQO or standard join search. 
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>int</i> <b>levels_needed</b> — ...
-* <i>List *</i> <b>initial_rels</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannerInfo *</i> <b>root</b> — query plan root.
+* <i>int</i> <b>levels_needed</b> — the number of child joinlist nodes.
+* <i>List *</i> <b>initial_rels</b> — list of join relations.
 
 
 <a name="set_rel_pathlist_hook" href="#set_rel_pathlist_hook">#</a> <i>void</i> <b>set_rel_pathlist_hook</b>(root, rel, rti, rte) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L33 "Source")
 
-Short description of this hook.
+Called at the end of building access paths for a base relation.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+The hook can apply changes to set of paths by adding new paths or deleting them. 
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>RelOptInfo *</i> <b>rel</b> — ...
-* <i>Index</i> <b>rti</b> — ...
-* <i>RangeTblEntry *</i> <b>rte</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannerInfo *</i> <b>root</b>
+* <i>RelOptInfo *</i> <b>rel</b> - relation info.
+* <i>Index</i> <b>rti</b> - range table index.
+* <i>RangeTblEntry *</i> <b>rte</b> range table entry.
 
 
 <a name="set_join_pathlist_hook" href="#set_join_pathlist_hook">#</a> <i>void</i> <b>set_join_pathlist_hook</b>(root, joinrel, outerrel, innerrel, jointype, extra) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/paths.h#L42 "Source")
 
-Short description of this hook.
+Called at the end of the process of joinrel modification to contain the best paths.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+The hook can manipulate path list to perform a postprocess for best paths.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>RelOptInfo *</i> <b>joinrel</b> — ...
-* <i>RelOptInfo *</i> <b>outerrel</b> — ...
-* <i>RelOptInfo *</i> <b>innerrel</b> — ...
-* <i>JoinType</i> <b>jointype</b> — ...
-* <i>JoinPathExtraData *</i> <b>extra</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannerInfo *</i> <b>root</b> — query plan root.
+* <i>RelOptInfo *</i> <b>joinrel</b> — list of paths.
+* <i>RelOptInfo *</i> <b>outerrel</b> - list of outer relation paths.
+* <i>RelOptInfo *</i> <b>innerrel</b> - list of inner relation paths.
+* <i>JoinType</i> <b>jointype</b> - the type of a join.
+* <i>JoinPathExtraData *</i> <b>extra</b>
 
 
 <a name="create_upper_paths_hook" href="#create_upper_paths_hook">#</a> <i>void</i> <b>create_upper_paths_hook</b>(root, stage, input_rel, output_rel) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L32 "Source")
 
-Short description of this hook.
+Called when postprocess of the path of set operations occurs.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+It's a possibility for extensions to contribute path in relation. 
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>UpperRelationKind</i> <b>stage</b> — ...
-* <i>RelOptInfo *</i> <b>input_rel</b> — ...
-* <i>RelOptInfo *</i> <b>output_rel</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannerInfo *</i> <b>root</b> — query plan root.
+* <i>UpperRelationKind</i> <b>stage</b>
+* <i>RelOptInfo *</i> <b>input_rel</b>
+* <i>RelOptInfo *</i> <b>output_rel</b>
 
 
 <a name="post_parse_analyze_hook" href="#post_parse_analyze_hook">#</a> <i>void</i> <b>post_parse_analyze_hook</b>(pstate, query) [<>](https://github.com/postgres/postgres/blob/master/src/include/parser/analyze.h#L22 "Source")
 
-Short description of this hook.
+Called when parse analyze goes, right after performing transformTopLevelStmt().
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Used in several internal methods: 
+[pg_analyze_and_rewrite_params()](https://github.com/postgres/postgres/blob/src/backend/tcop/postgres.c#L686), 
+[parse_analyze()](https://github.com/postgres/postgres/blob/src/backend/parser/analyze.c#L100).
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>ParseState *</i> <b>pstate</b> — ...
-* <i>Query *</i> <b>query</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>ParseState *</i> <b>pstate</b> — parse state filled by query_string and queryEnv.  
+* <i>Query *</i> <b>query</b> — output result of the transformTopLevelStmt().
 
 
 ## Executor Hooks
@@ -627,8 +544,6 @@ Note: when it set, replaces the [standard_ExecutorStart()](https://github.com/po
 which contains a lot of predefined logic. 
 Consider inclusion of the standard executor to the hook handler 
 if you assume adding your logic atop.
-
-This hook should not provide any output.
 
 *Inputs:*
 
@@ -667,8 +582,6 @@ Called after the last ExecutorRun call
 
 Replaces [standard_ExecutorFinish()](https://github.com/postgres/postgres/blob/src/backend/executor/execMain.c#L408)
 
-This hook should not provide any output.
-
 *Inputs:*
 
 * <i>QueryDesc *</i> <b>queryDesc</b> — query descriptor from the traffic cop.
@@ -678,14 +591,7 @@ This hook should not provide any output.
 
 Called at the end of execution of any query plan.
 
-*Inputs:*
-
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
 * <i>QueryDesc *</i> <b>queryDesc</b> — query descriptor from the traffic cop.
-
-This hook should not provide any output.
 
 
 <a name="ProcessUtility_hook" href="#ProcessUtility_hook">#</a> <i>void</i> <b>ProcessUtility_hook</b>(pstmt, queryString, context, params, queryEnv, dest, completionTag) [<>](https://github.com/postgres/postgres/blob/master/src/include/tcop/utility.h#L32 "Source")
@@ -730,8 +636,6 @@ with the help of [func_end()](Detailed.md#func_end).
 Before any call to func_setup, PLpgSQL fills in the error_callback 
 and assign_expr fields with pointers to its own plpgsql_exec_error_callback 
 and exec_assign_expr functions.
- 
-The hook should not provide any output. 
 
 *Inputs:*
 
@@ -747,8 +651,6 @@ This hook is called when we start PLpgSQL function, after we've initialized
 the local variables.
 The hook can be used for pre-validation of a function arguments. 
 
-The hook should not provide any output. 
-
 *Inputs:*
 
 * <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.
@@ -762,8 +664,6 @@ Hook for intercepting end of a function.
 This hook is called at the end of PLpgSQL function.
 Can be used as a function callback.
 
-The hook should not provide any output. 
-
 *Inputs:*
 
 * <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.
@@ -774,8 +674,6 @@ The hook should not provide any output.
 
 Called before each statement of a function.
 
-The hook should not provide any output. 
-
 *Inputs:*
 
 * <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.
@@ -785,8 +683,6 @@ The hook should not provide any output.
 <a name="stmt_end" href="#stmt_end">#</a> <i>void</i> <b>stmt_end</b>(estate, stmt) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1075 "Source")
 
 Called after each statement of a function.
-
-The hook should not provide any output. 
 
 *Inputs:*
 

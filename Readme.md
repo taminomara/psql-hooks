@@ -45,12 +45,12 @@ Provide description here
 * [get_index_stats_hook](Detailed.md#get_index_stats_hook) — hook for overriding index stats lookup.
 * [get_relation_info_hook](Detailed.md#get_relation_info_hook) — hook for altering results of the relation info lookup.
 * [get_relation_stats_hook](Detailed.md#get_relation_stats_hook) — hook for overriding relation stats lookup.
-* [planner_hook](Detailed.md#planner_hook) — short description of this hook.
-* [join_search_hook](Detailed.md#join_search_hook) — short description of this hook.
-* [set_rel_pathlist_hook](Detailed.md#set_rel_pathlist_hook) — short description of this hook.
-* [set_join_pathlist_hook](Detailed.md#set_join_pathlist_hook) — short description of this hook.
-* [create_upper_paths_hook](Detailed.md#create_upper_paths_hook) — short description of this hook.
-* [post_parse_analyze_hook](Detailed.md#post_parse_analyze_hook) — short description of this hook.
+* [planner_hook](Detailed.md#planner_hook) — called in query optimizer entry point.
+* [join_search_hook](Detailed.md#join_search_hook) — called when optimiser chooses order for join relations.
+* [set_rel_pathlist_hook](Detailed.md#set_rel_pathlist_hook) — called at the end of building access paths for a base relation.
+* [set_join_pathlist_hook](Detailed.md#set_join_pathlist_hook) — called at the end of the process of joinrel modification to contain the best paths.
+* [create_upper_paths_hook](Detailed.md#create_upper_paths_hook) — called when postprocess of the path of set operations occurs.
+* [post_parse_analyze_hook](Detailed.md#post_parse_analyze_hook) — called when parse analyze goes, right after performing transformTopLevelStmt().
 
 ## [Executor Hooks](Detailed.md#executor-hooks)
 
