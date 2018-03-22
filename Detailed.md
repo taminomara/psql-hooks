@@ -660,137 +660,95 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 
 <a name="ExecutorStart_hook" href="#ExecutorStart_hook">#</a> <i>void</i> <b>ExecutorStart_hook</b>(queryDesc, eflags) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L71 "Source")
 
-Short description of this hook.
+Called at the beginning of any execution of any query plan.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Note: when it set, replaces the [standard_ExecutorStart()](https://github.com/postgres/postgres/blob/src/backend/executor/execMain.c#L149), 
+which contains a lot of predefined logic. 
+Consider inclusion of the standard executor to the hook handler 
+if you assume adding your logic atop.
+
+This hook should not provide any output.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>QueryDesc *</i> <b>queryDesc</b> — ...
-* <i>int</i> <b>eflags</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>QueryDesc *</i> <b>queryDesc</b> — created by CreateQueryDesc, 
+tupDesc field of the QueryDesc is filled in to describe the tuples that will be 
+returned, and the internal fields (estate and planstate) are set up.
+* <i>int</i> <b>eflags</b> — contains flag bits as described in executor.h.
 
 
 <a name="ExecutorRun_hook" href="#ExecutorRun_hook">#</a> <i>void</i> <b>ExecutorRun_hook</b>(queryDesc, direction, count, execute_once) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L78 "Source")
 
-Short description of this hook.
+Called at any plan execution, after ExecutorStart.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Replaces [standard_ExecutorRun()](https://github.com/postgres/postgres/blob/src/backend/executor/execMain.c#L308)
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>QueryDesc *</i> <b>queryDesc</b> — ...
-* <i>ScanDirection</i> <b>direction</b> — ...
-* <i>uint64</i> <b>count</b> — ...
-* <i>bool</i> <b>execute_once</b> — ...
+* <i>QueryDesc *</i> <b>queryDesc</b> — query descriptor from the traffic cop.
+* <i>ScanDirection</i> <b>direction</b> - if value is NoMovementScanDirection then nothing is done 
+except to start up/shut down the destination.
+* <i>uint64</i> <b>count</b> — count = 0 is interpreted as no portal limit, i.e., 
+run to completion.  Also note that the count limit is only applied to 
+retrieved tuples, not for instance to those inserted/updated/deleted by a ModifyTable plan node.
+* <i>bool</i> <b>execute_once</b> — becomes equal to true after first execution.
 
 *Output:*
 
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+This hook should not provide any output. However output tuples (if any) are sent to 
+the destination receiver specified in the QueryDesc. 
+The number of tuples processed at the top level can be found in estate->es_processed.
 
 
 <a name="ExecutorFinish_hook" href="#ExecutorFinish_hook">#</a> <i>void</i> <b>ExecutorFinish_hook</b>(queryDesc) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L82 "Source")
 
-Short description of this hook.
+Called after the last ExecutorRun call
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Replaces [standard_ExecutorFinish()](https://github.com/postgres/postgres/blob/src/backend/executor/execMain.c#L408)
+
+This hook should not provide any output.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>QueryDesc *</i> <b>queryDesc</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>QueryDesc *</i> <b>queryDesc</b> — query descriptor from the traffic cop.
 
 
 <a name="ExecutorEnd_hook" href="#ExecutorEnd_hook">#</a> <i>void</i> <b>ExecutorEnd_hook</b>(queryDesc) [<>](https://github.com/postgres/postgres/blob/master/src/include/executor/executor.h#L86 "Source")
 
-Short description of this hook.
-
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Called at the end of execution of any query plan.
 
 *Inputs:*
 
 Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
 Are there any special input states? Can they be null (e.g. `nullptr`)?
 
-* <i>QueryDesc *</i> <b>queryDesc</b> — ...
+* <i>QueryDesc *</i> <b>queryDesc</b> — query descriptor from the traffic cop.
 
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+This hook should not provide any output.
 
 
 <a name="ProcessUtility_hook" href="#ProcessUtility_hook">#</a> <i>void</i> <b>ProcessUtility_hook</b>(pstmt, queryString, context, params, queryEnv, dest, completionTag) [<>](https://github.com/postgres/postgres/blob/master/src/include/tcop/utility.h#L32 "Source")
 
-Short description of this hook.
+Hook for the ProcessUtility.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Replaces [standard_ProcessUtility()](https://github.com/postgres/postgres/blob/src/backend/tcop/utility.c#L375)
+
+This hook should not provide any output.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannedStmt *</i> <b>pstmt</b> — ...
-* <i>const char *</i> <b>queryString</b> — ...
-* <i>ProcessUtilityContext</i> <b>context</b> — ...
-* <i>ParamListInfo</i> <b>params</b> — ...
-* <i>QueryEnvironment *</i> <b>queryEnv</b> — ...
-* <i>DestReceiver *</i> <b>dest</b> — ...
-* <i>char *</i> <b>completionTag</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannedStmt *</i> <b>pstmt</b> — PlannedStmt wrapper for the utility statement
+* <i>const char *</i> <b>queryString</b> — original source text of command, 
+may be passed multiple times when processing a query string
+containing multiple semicolon-separated statements. pstmt->stmt_location and pstmt->stmt_len 
+indicates the substring containing the current statement.
+* <i>ProcessUtilityContext</i> <b>context</b> — identifies source of statement 
+(toplevel client command, non-toplevel client command, subcommand of a larger utility command)
+* <i>ParamListInfo</i> <b>params</b> — parameters of an execution.
+* <i>QueryEnvironment *</i> <b>queryEnv</b> — execution environment, optional, can be NULL.
+* <i>DestReceiver *</i> <b>dest</b> — results receiver.
+* <i>char *</i> <b>completionTag</b> — points to a buffer of size COMPLETION_TAG_BUFSIZE 
+in which to store a command completion status string
 
 
 ## PL/pgsql Hooks
@@ -800,131 +758,78 @@ It you can think of any use-cases for this hook, spell it out. If no, delete thi
 
 <a name="func_setup" href="#func_setup">#</a> <i>void</i> <b>func_setup</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1071 "Source")
 
-Short description of this hook.
+Hook for intercepting PLpgSQL function pre-init phase. 
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook is called when we start a function before we've initialized 
+the local variables defined by the function.
+Can be useful for time measuring of а function initialization in tandem 
+with [func_beg()](Detailed.md#func_beg) and for measuring total execution time 
+with the help of [func_end()](Detailed.md#func_end).
+
+Before any call to func_setup, PLpgSQL fills in the error_callback 
+and assign_expr fields with pointers to its own plpgsql_exec_error_callback 
+and exec_assign_expr functions.
+ 
+The hook should not produce any output. 
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
-* <i>PLpgSQL_function *</i> <b>func</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.
+* <i>PLpgSQL_function *</i> <b>func</b> — PLpgSQL compiled function.
 
 
 <a name="func_beg" href="#func_beg">#</a> <i>void</i> <b>func_beg</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1072 "Source")
 
-Short description of this hook.
+Hook for intercepting post-init phase. 
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook is called when we start PLpgSQL function, after we've initialized 
+the local variables.
+The hook can be used for pre-validation of a function arguments. 
+
+The hook should not produce any output. 
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
-* <i>PLpgSQL_function *</i> <b>func</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.
+* <i>PLpgSQL_function *</i> <b>func</b> — PLpgSQL compiled function.
 
 
 <a name="func_end" href="#func_end">#</a> <i>void</i> <b>func_end</b>(estate, func) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1073 "Source")
 
-Short description of this hook.
+Hook for intercepting end of a function. 
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook is called at the end of PLpgSQL function.
+Can be used as a function callback.
+
+The hook should not produce any output. 
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
-* <i>PLpgSQL_function *</i> <b>func</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.
+* <i>PLpgSQL_function *</i> <b>func</b> — PLpgSQL compiled function.
 
 
 <a name="stmt_beg" href="#stmt_beg">#</a> <i>void</i> <b>stmt_beg</b>(estate, stmt) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1074 "Source")
 
-Short description of this hook.
+Called before each statement of a function.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+The hook should not produce any output. 
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
-* <i>PLpgSQL_stmt *</i> <b>stmt</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.
+* <i>PLpgSQL_stmt *</i> <b>stmt</b> — execution node.
 
 
 <a name="stmt_end" href="#stmt_end">#</a> <i>void</i> <b>stmt_end</b>(estate, stmt) [<>](https://github.com/postgres/postgres/blob/master/src/pl/plpgsql/src/plpgsql.h#L1075 "Source")
 
-Short description of this hook.
+Called after each statement of a function.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+The hook should not produce any output. 
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PLpgSQL_execstate *</i> <b>estate</b> — ...
-* <i>PLpgSQL_stmt *</i> <b>stmt</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.
+* <i>PLpgSQL_stmt *</i> <b>stmt</b> — execution node.
 
 

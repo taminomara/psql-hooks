@@ -56,19 +56,19 @@ Provide description here
 
 
 
-* [ExecutorStart_hook](Detailed.md#ExecutorStart_hook) — short description of this hook.
-* [ExecutorRun_hook](Detailed.md#ExecutorRun_hook) — short description of this hook.
-* [ExecutorFinish_hook](Detailed.md#ExecutorFinish_hook) — short description of this hook.
-* [ExecutorEnd_hook](Detailed.md#ExecutorEnd_hook) — short description of this hook.
-* [ProcessUtility_hook](Detailed.md#ProcessUtility_hook) — short description of this hook.
+* [ExecutorStart_hook](Detailed.md#ExecutorStart_hook) — called at the beginning of any execution of any query plan.
+* [ExecutorRun_hook](Detailed.md#ExecutorRun_hook) — called at any plan execution, after ExecutorStart.
+* [ExecutorFinish_hook](Detailed.md#ExecutorFinish_hook) — called after the last ExecutorRun call
+* [ExecutorEnd_hook](Detailed.md#ExecutorEnd_hook) — called at the end of execution of any query plan.
+* [ProcessUtility_hook](Detailed.md#ProcessUtility_hook) — hook for the ProcessUtility.
 
 ## [PL/pgsql Hooks](Detailed.md#plpgsql-hooks)
 
 
 
-* [func_setup](Detailed.md#func_setup) — short description of this hook.
-* [func_beg](Detailed.md#func_beg) — short description of this hook.
-* [func_end](Detailed.md#func_end) — short description of this hook.
-* [stmt_beg](Detailed.md#stmt_beg) — short description of this hook.
-* [stmt_end](Detailed.md#stmt_end) — short description of this hook.
+* [func_setup](Detailed.md#func_setup) — hook for intercepting PLpgSQL function pre-init phase.
+* [func_beg](Detailed.md#func_beg) — hook for intercepting post-init phase.
+* [func_end](Detailed.md#func_end) — hook for intercepting end of a function.
+* [stmt_beg](Detailed.md#stmt_beg) — called before each statement of a function.
+* [stmt_end](Detailed.md#stmt_end) — called after each statement of a function.
 
