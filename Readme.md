@@ -40,8 +40,8 @@ stored withing the extension local memory.
 During its work, postgres checks whether certain function pointers are not null
 and if that's the case, calls them.
 
-See the detailed description for an explanation on how to implement a hook and
-an example.
+See the [detailed description](Detailed.md) for an explanation on
+how to implement a hook and an example.
 
 * [General Hooks](#general-hooks)
 * [Security Hooks](#security-hooks)
