@@ -1,7 +1,5 @@
 # Postgresql hooks documentation
 
-Provide description here
-
 PostgreSQL hooks are a simple way to extend functionality of the database.
 They allow extensions to introspect database state, react to events and
 interfere with database operations.
