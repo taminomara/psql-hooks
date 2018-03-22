@@ -4,7 +4,7 @@ This hook is called when we start PLpgSQL function, after we've initialized
 the local variables.
 The hook can be used for pre-validation of a function arguments. 
 
-The hook should not produce any output. 
+The hook should not provide any output. 
 
 *Inputs:*
 

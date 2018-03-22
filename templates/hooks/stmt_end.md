@@ -1,6 +1,6 @@
 Called after each statement of a function.
 
-The hook should not produce any output. 
+The hook should not provide any output. 
 
 *Inputs:*
 

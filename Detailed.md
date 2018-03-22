@@ -769,7 +769,7 @@ Before any call to func_setup, PLpgSQL fills in the error_callback
 and assign_expr fields with pointers to its own plpgsql_exec_error_callback 
 and exec_assign_expr functions.
  
-The hook should not produce any output. 
+The hook should not provide any output. 
 
 *Inputs:*
 
@@ -785,7 +785,7 @@ This hook is called when we start PLpgSQL function, after we've initialized
 the local variables.
 The hook can be used for pre-validation of a function arguments. 
 
-The hook should not produce any output. 
+The hook should not provide any output. 
 
 *Inputs:*
 
@@ -800,7 +800,7 @@ Hook for intercepting end of a function.
 This hook is called at the end of PLpgSQL function.
 Can be used as a function callback.
 
-The hook should not produce any output. 
+The hook should not provide any output. 
 
 *Inputs:*
 
@@ -812,7 +812,7 @@ The hook should not produce any output.
 
 Called before each statement of a function.
 
-The hook should not produce any output. 
+The hook should not provide any output. 
 
 *Inputs:*
 
@@ -824,7 +824,7 @@ The hook should not produce any output.
 
 Called after each statement of a function.
 
-The hook should not produce any output. 
+The hook should not provide any output. 
 
 *Inputs:*
 
