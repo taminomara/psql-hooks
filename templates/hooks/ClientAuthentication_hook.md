@@ -1,4 +1,4 @@
-Hook for plugins to control the authentication process.
+Hook for controlling the authentication process.
 
 Called after finishing user authentication (regardless of whether authentication
 succeed or not).

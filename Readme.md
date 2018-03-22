@@ -22,7 +22,7 @@ Provide description here
 
 
 * [check_password_hook](Detailed.md#check_password_hook) — hook for enforcing password constraints and performing action on password change.
-* [ClientAuthentication_hook](Detailed.md#ClientAuthentication_hook) — hook for plugins to control the authentication process.
+* [ClientAuthentication_hook](Detailed.md#ClientAuthentication_hook) — hook for controlling the authentication process.
 * [ExecutorCheckPerms_hook](Detailed.md#ExecutorCheckPerms_hook) — hook for adding additional security checks on the per-relation level.
 * [object_access_hook](Detailed.md#object_access_hook) — hook to monitor accesses to objects.
 * [row_security_policy_hook_permissive](Detailed.md#row_security_policy_hook_permissive) — hook to add policies which are combined with the other permissive policies.
@@ -33,7 +33,7 @@ Provide description here
 
 
 * [needs_fmgr_hook](Detailed.md#needs_fmgr_hook) — auxiliary hook which decides whether `fmgr_hook` should be applied to a function.
-* [fmgr_hook](Detailed.md#fmgr_hook) — short description of this hook.
+* [fmgr_hook](Detailed.md#fmgr_hook) — hook for controlling function execution process.
 
 ## [Planner Hooks](Detailed.md#planner-hooks)
 

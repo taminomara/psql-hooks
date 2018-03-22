@@ -1,23 +1,22 @@
-Short description of this hook.
+Hook for controlling function execution process.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This is intended as support for loadable security policy modules, which may
+want to perform additional privilege checks on function entry or exit,
+or to do other internal bookkeeping.
+
+It is invoked whenever postgres executes a function which was explicitly
+marked as hookable by `needs_fmgr_hook`. For each execution this hook is fired
+exactly twice: first time before invoking the function, second time after
+the function returns/throws.
+
+Note that there is a change that this hook will be called even if a function
+is not of interest of your extension (maybe some other extension made it
+hookable via its `needs_fmgr_hook`).
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>FmgrHookEventType</i> <b>event</b> — ...
-* <i>FmgrInfo *</i> <b>flinfo</b> — ...
-* <i>Datum *</i> <b>arg</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>FmgrHookEventType</i> <b>event</b> — event type, can be one of
+  `FHET_START`, `FHET_END`, `FHET_ABORT`.
+* <i>FmgrInfo *</i> <b>flinfo</b> — function info, including its id and
+  arguments specification.
+* <i>Datum *</i> <b>arg</b> — function arguments.
