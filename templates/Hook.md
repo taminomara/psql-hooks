@@ -3,7 +3,7 @@ Short description of this hook.
 Remember to mention when it's called, what should it do, what inputs supplied to this hook,
 what output is expected and (shortly) how postgres changes its behavior based on received output.
 It may be helpful to mention any common use-cases for this hook or some
-plugins that are using this hook.
+extensions that are using this hook.
 
 *Inputs:*
 

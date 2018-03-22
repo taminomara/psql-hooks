@@ -5,8 +5,8 @@ this function.
 
 The result of this hook should be combined with the result of a previously
 registered `needs_fmgr_hook` via the `OR` clause. This is required to ensure
-that other plugins can hook function even though this very plugin does
-not hook them. Such behavior is vital for proper work of the security plugins.
+that other extensions can hook function even though this very extension does
+not hook them. Such behavior is vital for proper work of the security extensions.
 
 Note that hooked functions are not inlined.
 

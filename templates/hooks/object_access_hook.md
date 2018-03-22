@@ -2,7 +2,7 @@ Hook to monitor accesses to objects.
 
 Object access hooks are called just before or just after performing certain
 actions on an SQL object. This is intended as infrastructure for security
-or logging plugins.
+or logging extensions.
 
 There are several types of actions defined in `ObjectAccessType`:
 

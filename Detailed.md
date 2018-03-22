@@ -44,11 +44,11 @@ flags.
 
 <a name="shmem_startup_hook" href="#shmem_startup_hook">#</a> <i>void</i> <b>shmem_startup_hook</b>() [<>](https://github.com/postgres/postgres/blob/master/src/include/storage/ipc.h#L77 "Source")
 
-Hook for plugins to initialize their shared memory.
+Hook for extensions to initialize their shared memory.
 
 This hook is called by postmaster or by a standalone backend
 right after postgres initializes its shared memory and semaphores
-so that plugins have chance to initialize their shared state.
+so that extensions have chance to initialize their shared state.
 
 It also may be called by a backend forked from the postmaster.
 In this situation, the shared memory segment already exists, so you only have
@@ -146,7 +146,7 @@ Hook to monitor accesses to objects.
 
 Object access hooks are called just before or just after performing certain
 actions on an SQL object. This is intended as infrastructure for security
-or logging plugins.
+or logging extensions.
 
 There are several types of actions defined in `ObjectAccessType`:
 
@@ -269,8 +269,8 @@ this function.
 
 The result of this hook should be combined with the result of a previously
 registered `needs_fmgr_hook` via the `OR` clause. This is required to ensure
-that other plugins can hook function even though this very plugin does
-not hook them. Such behavior is vital for proper work of the security plugins.
+that other extensions can hook function even though this very extension does
+not hook them. Such behavior is vital for proper work of the security extensions.
 
 Note that hooked functions are not inlined.
 

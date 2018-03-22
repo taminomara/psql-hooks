@@ -1,8 +1,8 @@
-Hook for plugins to initialize their shared memory.
+Hook for extensions to initialize their shared memory.
 
 This hook is called by postmaster or by a standalone backend
 right after postgres initializes its shared memory and semaphores
-so that plugins have chance to initialize their shared state.
+so that extensions have chance to initialize their shared state.
 
 It also may be called by a backend forked from the postmaster.
 In this situation, the shared memory segment already exists, so you only have

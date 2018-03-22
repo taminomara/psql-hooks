@@ -15,7 +15,7 @@ Provide description here
 
 
 * [emit_log_hook](Detailed.md#emit_log_hook) — hook for intercepting messages before they are sent to the server log.
-* [shmem_startup_hook](Detailed.md#shmem_startup_hook) — hook for plugins to initialize their shared memory.
+* [shmem_startup_hook](Detailed.md#shmem_startup_hook) — hook for extensions to initialize their shared memory.
 
 ## [Security Hooks](Detailed.md#security-hooks)
 
