@@ -1,27 +1,26 @@
-Short description of this hook.
+Hook for overriding explain procedure for a single query.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook, if present, should generate explanation for the given query
+using other `Explain*` functions and modifying the explain state.
+
+The default behaviour is to plan query using `pg_plan_query()` and than
+delegate printing to the `ExplainOnePlan()` function.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Query *</i> <b>query</b> — ...
-* <i>int</i> <b>cursorOptions</b> — ...
-* <i>IntoClause *</i> <b>into</b> — ...
-* <i>ExplainState *</i> <b>es</b> — ...
-* <i>const char *</i> <b>queryString</b> — ...
-* <i>ParamListInfo</i> <b>params</b> — ...
-* <i>QueryEnvironment *</i> <b>queryEnv</b> — ...
+* <i>Query *</i> <b>query</b> — query that needs explanation.
+* <i>int</i> <b>cursorOptions</b> — cursor options in form of a per-bit enum.
+  See `CURSOR_OPT_*` macros for detailed documentations.
+* <i>IntoClause *</i> <b>into</b> — target information for `SELECT INTO`,
+  `CREATE TABLE AS`, and `CREATE MATERIALIZED VIEW`. `NULL` unless
+  explaining the contents of a `CreateTableAsStmt`.
+* <i>ExplainState *</i> <b>es</b> — current explain state. The hook is free to
+  modify it in order to produce output.
+* <i>const char *</i> <b>queryString</b> — an actual query string.
+* <i>ParamListInfo</i> <b>params</b> — plan parameters.
+* <i>QueryEnvironment *</i> <b>queryEnv</b> — context-specific values.
 
 *Output:*
 
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
+This hook does not produce any output.
 
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.

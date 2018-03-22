@@ -1,24 +1,17 @@
-Short description of this hook.
+Hook for altering results of the relation info lookup.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook allow plugins to editorialize on the info that was obtained from the
+catalogs by the default relation info lookup. Actions might include altering
+the assumed relation size, removing an index, or adding a hypothetical
+index to the `indexlist`.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>Oid</i> <b>relationObjectId</b> — ...
-* <i>bool</i> <b>inhparent</b> — ...
-* <i>RelOptInfo *</i> <b>rel</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannerInfo *</i> <b>root</b> — current planner info.
+* <i>Oid</i> <b>relationObjectId</b> — id of the relation that we are looking
+  info for.
+* <i>bool</i> <b>inhparent</b> — if true, all we need to do is set up the attr
+  arrays: the `RelOptInfo` actually represents the `appendrel` formed by an
+  inheritance tree, and so the parent rel's physical size and index information
+  isn't important for it.
+* <i>RelOptInfo *</i> <b>rel</b> — relation info that can be adjusted.

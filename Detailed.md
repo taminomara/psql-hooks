@@ -254,6 +254,11 @@ will be executed in a predefined order. That is, first postgres executes the
 default policies sorted by their name, than postgres executes custom policies,
 also sorted by their name.
 
+*Inputs:*
+
+* <i>CmdType</i> <b>cmdtype</b> — command type.
+* <i>Relation</i> <b>relation</b> — relation id.
+
 
 ## Function Manager Hooks
 
@@ -287,7 +292,7 @@ Return `true` if you want to hook enter/exit event for this function.
 
 Hook for controlling function execution process.
 
-This is intended as support for loadable security policy modules, which may
+This hook is intended as support for loadable security policy modules, which may
 want to perform additional privilege checks on function entry or exit,
 or to do other internal bookkeeping.
 
@@ -316,172 +321,129 @@ hookable via its `needs_fmgr_hook`).
 
 <a name="explain_get_index_name_hook" href="#explain_get_index_name_hook">#</a> <i>const char *</i> <b>explain_get_index_name_hook</b>(indexId) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h#L62 "Source")
 
-Short description of this hook.
+Hook for altering index names in explain statements.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Extensions may override the default name generation mechanism
+so that plans involving hypothetical indexes can be explained.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Oid</i> <b>indexId</b> — ...
+* <i>Oid</i> <b>indexId</b> — index id.
 
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+Name of the index or `NULL`. In the later case, a default name
+will be generated.
 
 
 <a name="ExplainOneQuery_hook" href="#ExplainOneQuery_hook">#</a> <i>void</i> <b>ExplainOneQuery_hook</b>(query, cursorOptions, into, es, queryString, params, queryEnv) [<>](https://github.com/postgres/postgres/blob/master/src/include/commands/explain.h#L58 "Source")
 
-Short description of this hook.
+Hook for overriding explain procedure for a single query.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook, if present, should generate explanation for the given query
+using other `Explain*` functions and modifying the explain state.
+
+The default behaviour is to plan query using `pg_plan_query()` and than
+delegate printing to the `ExplainOnePlan()` function.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Query *</i> <b>query</b> — ...
-* <i>int</i> <b>cursorOptions</b> — ...
-* <i>IntoClause *</i> <b>into</b> — ...
-* <i>ExplainState *</i> <b>es</b> — ...
-* <i>const char *</i> <b>queryString</b> — ...
-* <i>ParamListInfo</i> <b>params</b> — ...
-* <i>QueryEnvironment *</i> <b>queryEnv</b> — ...
+* <i>Query *</i> <b>query</b> — query that needs explanation.
+* <i>int</i> <b>cursorOptions</b> — cursor options in form of a per-bit enum.
+  See `CURSOR_OPT_*` macros for detailed documentations.
+* <i>IntoClause *</i> <b>into</b> — target information for `SELECT INTO`,
+  `CREATE TABLE AS`, and `CREATE MATERIALIZED VIEW`. `NULL` unless
+  explaining the contents of a `CreateTableAsStmt`.
+* <i>ExplainState *</i> <b>es</b> — current explain state. The hook is free to
+  modify it in order to produce output.
+* <i>const char *</i> <b>queryString</b> — an actual query string.
+* <i>ParamListInfo</i> <b>params</b> — plan parameters.
+* <i>QueryEnvironment *</i> <b>queryEnv</b> — context-specific values.
 
 *Output:*
 
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
+This hook does not produce any output.
 
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
 
 
 <a name="get_attavgwidth_hook" href="#get_attavgwidth_hook">#</a> <i>int32</i> <b>get_attavgwidth_hook</b>(relid, attnum) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/lsyscache.h#L62 "Source")
 
-Short description of this hook.
+Hook for controlling an algorithm for predicting the average width of entries in the column.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook, if set, should return the average width of entries in the column.
+If returned value is greater than `0`, it is returned to the planner.
+Otherwise, the default algorithm is invoked.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Oid</i> <b>relid</b> — ...
-* <i>AttrNumber</i> <b>attnum</b> — ...
+* <i>Oid</i> <b>relid</b> — relation id.
+* <i>AttrNumber</i> <b>attnum</b> — column number.
 
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+Average width of entries in the given column of the given relation or zero
+to fall back to the default algorithm.
 
 
 <a name="get_index_stats_hook" href="#get_index_stats_hook">#</a> <i>bool</i> <b>get_index_stats_hook</b>(root, indexOid, indexattnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h#L151 "Source")
 
-Short description of this hook.
+Hook for overriding index stats lookup.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Given the planner state and an index, the hook should decide if it can provide
+any useful stats. If yes, it should supply a `statsTuple` and a `freefunc` and
+return `true`. If no, it should return `false`.
+
+Note that `freefunc` must be set if `statsTuple` is set.
+
+Note also that `vardata` should not be changed if `false` is returned.
+Postgres will not check whether `statsTuple` and `freefunc` are set.
+It will simply overwrite them.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>Oid</i> <b>indexOid</b> — ...
-* <i>AttrNumber</i> <b>indexattnum</b> — ...
-* <i>VariableStatData *</i> <b>vardata</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannerInfo *</i> <b>root</b> — current planner info.
+* <i>Oid</i> <b>indexOid</b> — id of the index that we are looking stats for.
+* <i>AttrNumber</i> <b>indexattnum</b> — index column.
+* <i>VariableStatData *</i> <b>vardata</b> — container for the return value.
 
 
 <a name="get_relation_info_hook" href="#get_relation_info_hook">#</a> <i>void</i> <b>get_relation_info_hook</b>(root, relationObjectId, inhparent, rel) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/plancat.h#L25 "Source")
 
-Short description of this hook.
+Hook for altering results of the relation info lookup.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook allow plugins to editorialize on the info that was obtained from the
+catalogs by the default relation info lookup. Actions might include altering
+the assumed relation size, removing an index, or adding a hypothetical
+index to the `indexlist`.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>Oid</i> <b>relationObjectId</b> — ...
-* <i>bool</i> <b>inhparent</b> — ...
-* <i>RelOptInfo *</i> <b>rel</b> — ...
-
-*Output:*
-
-This hook does not produce any output. Describe, what exactly it should do.
-Maybe, it should throw an error via a standard `ereport(ERROR, ...)`?
-Maybe, there are some mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannerInfo *</i> <b>root</b> — current planner info.
+* <i>Oid</i> <b>relationObjectId</b> — id of the relation that we are looking
+  info for.
+* <i>bool</i> <b>inhparent</b> — if true, all we need to do is set up the attr
+  arrays: the `RelOptInfo` actually represents the `appendrel` formed by an
+  inheritance tree, and so the parent rel's physical size and index information
+  isn't important for it.
+* <i>RelOptInfo *</i> <b>rel</b> — relation info that can be adjusted.
 
 
 <a name="get_relation_stats_hook" href="#get_relation_stats_hook">#</a> <i>bool</i> <b>get_relation_stats_hook</b>(root, rte, attnum, vardata) [<>](https://github.com/postgres/postgres/blob/master/src/include/utils/selfuncs.h#L146 "Source")
 
-Short description of this hook.
+Hook for overriding relation stats lookup.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Similar to `get_index_stats_hook`, this hook should either return `false`
+or take control over relation stats lookup, write output the the `vardata`
+container, and return `true`.
+
+See `get_index_stats_hook` for more details.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>RangeTblEntry *</i> <b>rte</b> — ...
-* <i>AttrNumber</i> <b>attnum</b> — ...
-* <i>VariableStatData *</i> <b>vardata</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannerInfo *</i> <b>root</b> — current planner info.
+* <i>Oid</i> <b>indexOid</b> — id of the index that we are looking stats for.
+* <i>AttrNumber</i> <b>indexattnum</b> — index column.
+* <i>VariableStatData *</i> <b>vardata</b> — container for the return value.
 
 
 <a name="planner_hook" href="#planner_hook">#</a> <i>PlannedStmt *</i> <b>planner_hook</b>(parse, cursorOptions, boundParams) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L25 "Source")

@@ -1,25 +1,18 @@
-Short description of this hook.
+Hook for overriding index stats lookup.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+Given the planner state and an index, the hook should decide if it can provide
+any useful stats. If yes, it should supply a `statsTuple` and a `freefunc` and
+return `true`. If no, it should return `false`.
+
+Note that `freefunc` must be set if `statsTuple` is set.
+
+Note also that `vardata` should not be changed if `false` is returned.
+Postgres will not check whether `statsTuple` and `freefunc` are set.
+It will simply overwrite them.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>PlannerInfo *</i> <b>root</b> — ...
-* <i>Oid</i> <b>indexOid</b> — ...
-* <i>AttrNumber</i> <b>indexattnum</b> — ...
-* <i>VariableStatData *</i> <b>vardata</b> — ...
-
-*Output:*
-
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+* <i>PlannerInfo *</i> <b>root</b> — current planner info.
+* <i>Oid</i> <b>indexOid</b> — id of the index that we are looking stats for.
+* <i>AttrNumber</i> <b>indexattnum</b> — index column.
+* <i>VariableStatData *</i> <b>vardata</b> — container for the return value.

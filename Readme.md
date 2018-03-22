@@ -39,12 +39,12 @@ Provide description here
 
 
 
-* [explain_get_index_name_hook](Detailed.md#explain_get_index_name_hook) — short description of this hook.
-* [ExplainOneQuery_hook](Detailed.md#ExplainOneQuery_hook) — short description of this hook.
-* [get_attavgwidth_hook](Detailed.md#get_attavgwidth_hook) — short description of this hook.
-* [get_index_stats_hook](Detailed.md#get_index_stats_hook) — short description of this hook.
-* [get_relation_info_hook](Detailed.md#get_relation_info_hook) — short description of this hook.
-* [get_relation_stats_hook](Detailed.md#get_relation_stats_hook) — short description of this hook.
+* [explain_get_index_name_hook](Detailed.md#explain_get_index_name_hook) — hook for altering index names in explain statements.
+* [ExplainOneQuery_hook](Detailed.md#ExplainOneQuery_hook) — hook for overriding explain procedure for a single query.
+* [get_attavgwidth_hook](Detailed.md#get_attavgwidth_hook) — hook for controlling an algorithm for predicting the average width of entries in the column.
+* [get_index_stats_hook](Detailed.md#get_index_stats_hook) — hook for overriding index stats lookup.
+* [get_relation_info_hook](Detailed.md#get_relation_info_hook) — hook for altering results of the relation info lookup.
+* [get_relation_stats_hook](Detailed.md#get_relation_stats_hook) — hook for overriding relation stats lookup.
 * [planner_hook](Detailed.md#planner_hook) — short description of this hook.
 * [join_search_hook](Detailed.md#join_search_hook) — short description of this hook.
 * [set_rel_pathlist_hook](Detailed.md#set_rel_pathlist_hook) — short description of this hook.

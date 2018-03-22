@@ -1,6 +1,6 @@
 Hook for controlling function execution process.
 
-This is intended as support for loadable security policy modules, which may
+This hook is intended as support for loadable security policy modules, which may
 want to perform additional privilege checks on function entry or exit,
 or to do other internal bookkeeping.
 

@@ -1,23 +1,15 @@
-Short description of this hook.
+Hook for controlling an algorithm for predicting the average width of entries in the column.
 
-Remember to mention when it's called, what should it do, what inputs supplied to this hook,
-what output is expected and (shortly) how postgres changes its behavior based on received output.
+This hook, if set, should return the average width of entries in the column.
+If returned value is greater than `0`, it is returned to the planner.
+Otherwise, the default algorithm is invoked.
 
 *Inputs:*
 
-Briefly describe hook inputs. Are inputs preprocessed somehow before calling the hook?
-Are there any special input states? Can they be null (e.g. `nullptr`)?
-
-* <i>Oid</i> <b>relid</b> — ...
-* <i>AttrNumber</i> <b>attnum</b> — ...
+* <i>Oid</i> <b>relid</b> — relation id.
+* <i>AttrNumber</i> <b>attnum</b> — column number.
 
 *Output:*
 
-Describe hook output. Are there any constraints for the output value?
-How postgres changes its behavior based on received output?
-Are there any special cases for output, e.g. returning `-1` or `nullptr`?
-Are there any mutable inputs this hook should change?
-
-*Use-cases:*
-
-It you can think of any use-cases for this hook, spell it out. If no, delete this section.
+Average width of entries in the given column of the given relation or zero
+to fall back to the default algorithm.
