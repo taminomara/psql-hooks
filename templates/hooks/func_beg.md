@@ -4,8 +4,6 @@ This hook is called when we start PLpgSQL function, after we've initialized
 the local variables.
 The hook can be used for pre-validation of a function arguments. 
 
-The hook should not provide any output. 
-
 *Inputs:*
 
 * <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.

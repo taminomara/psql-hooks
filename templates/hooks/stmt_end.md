@@ -1,7 +1,5 @@
 Called after each statement of a function.
 
-The hook should not provide any output. 
-
 *Inputs:*
 
 * <i>PLpgSQL_execstate *</i> <b>estate</b> — runtime execution data.

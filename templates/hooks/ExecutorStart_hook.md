@@ -5,8 +5,6 @@ which contains a lot of predefined logic.
 Consider inclusion of the standard executor to the hook handler 
 if you assume adding your logic atop.
 
-This hook should not provide any output.
-
 *Inputs:*
 
 * <i>QueryDesc *</i> <b>queryDesc</b> — created by CreateQueryDesc, 
