@@ -1,6 +1,6 @@
 # Postgresql hooks documentation
 
-Provide description here.
+{% include "templates/DetailedHeader.md" %}
 
 {% for section in sections -%}
 * [{{ section.name }}](#{{ section.slug }})

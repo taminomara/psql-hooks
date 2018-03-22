@@ -72,6 +72,3 @@ extensions access is only allowed if all extensions agree.
 
 For `OAT_FUNCTION_EXECUTE` type, `subId` and `arg` are unused, and
 `classId` is always `ProcedureRelationId`.
-
-> copyright notice: some contents of this description
-> was copied from source code comments.
