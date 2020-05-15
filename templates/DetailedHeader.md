@@ -38,32 +38,31 @@ static void auth_delay_checks(Port *port, int status)
 {
     // If any other extension registered its own hook handler,
     // call it before performing our own logic.
-	if (original_client_auth_hook)
-		original_client_auth_hook(port, status);
+    if (original_client_auth_hook)
+        original_client_auth_hook(port, status);
 
     // If authentication failed, we wait for one second before returning
     // control to the caller.
-	if (status != STATUS_OK)
-	{
-		pg_usleep(1000000L);
-	}
+    if (status != STATUS_OK)
+    {
+        pg_usleep(1000000L);
+    }
 }
 
 // Called upon extension load.
 void _PG_init(void)
 {
     // Save the original hook value.
-	original_client_auth_hook = ClientAuthentication_hook;
-	// Register our handler.
-	ClientAuthentication_hook = auth_delay_checks;
+    original_client_auth_hook = ClientAuthentication_hook;
+    // Register our handler.
+    ClientAuthentication_hook = auth_delay_checks;
 }
 
 // Called with extension unload.
 void _PG_fini(void)
 {
-	
     // Return back the original hook value.
-    	ClientAuthentication_hook = original_client_auth_hook;
+        ClientAuthentication_hook = original_client_auth_hook;
 }
 
 ```
