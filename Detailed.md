@@ -64,7 +64,7 @@ void _PG_init(void)
 void _PG_fini(void)
 {
     // Return back the original hook value.
-        ClientAuthentication_hook = original_client_auth_hook;
+    ClientAuthentication_hook = original_client_auth_hook;
 }
 
 ```
