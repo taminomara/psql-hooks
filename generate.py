@@ -166,6 +166,7 @@ planner_hook_type = HookType(
     output='PlannedStmt *',
     inputs=[
         HookInput('Query *', 'parse'),
+        HookInput('const char *', 'query_string'),
         HookInput('int', 'cursorOptions'),
         HookInput('ParamListInfo', 'boundParams'),
     ]

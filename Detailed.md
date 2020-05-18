@@ -512,7 +512,7 @@ See `get_index_stats_hook` for more details.
 * <i>VariableStatData *</i> <b>vardata</b> — container for the return value.
 
 
-<a name="planner_hook" href="#planner_hook">#</a> <i>PlannedStmt *</i> <b>planner_hook</b>(parse, cursorOptions, boundParams) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L25 "Source")
+<a name="planner_hook" href="#planner_hook">#</a> <i>PlannedStmt *</i> <b>planner_hook</b>(parse, query_string, cursorOptions, boundParams) [<>](https://github.com/postgres/postgres/blob/master/src/include/optimizer/planner.h#L25 "Source")
 
 Called in query optimizer entry point.
 
@@ -521,7 +521,8 @@ if this hook assuming just pre-process or post-process for builtin planner.
 
 *Inputs:*
 
-* <i>Query *</i> <b>parse</b> — query text.
+* <i>Query *</i> <b>parse</b> — parsed query text.
+* <i>const char *</i> <b>query_string</b> — original query text.
 * <i>int</i> <b>cursorOptions</b>
 * <i>ParamListInfo</i> <b>boundParams</b>
 
