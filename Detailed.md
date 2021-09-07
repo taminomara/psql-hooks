@@ -317,7 +317,8 @@ See `row_security_policy_hook_permissive` for a detailed description.
 
 Unlike for permissive policies, postgres guarantees that restrictive policies
 will be executed in a predefined order. That is, first postgres executes the
-default policies sorted by their name, than postgres executes custom policies,
+default policies sorted by their name, 
+postgres executes custom policies,
 also sorted by their name.
 
 *Inputs:*
@@ -409,7 +410,7 @@ Hook for overriding explain procedure for a single query.
 This hook, if present, should generate explanation for the given query
 using other `Explain*` functions and modifying the explain state.
 
-The default behaviour is to plan query using `pg_plan_query()` and than
+The default behaviour is to plan query using `pg_plan_query()` and then
 delegate printing to the `ExplainOnePlan()` function.
 
 *Inputs:*
