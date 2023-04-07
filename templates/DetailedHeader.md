@@ -4,7 +4,7 @@ interfere with database operations.
 
 Every hook is a pointer to a function, initially set to `NULL`.
 
-When postgres wants to call a hook, it checks whether the pointer fot that
+When postgres wants to call a hook, it checks whether the pointer for that
 hook is not null and if that's the case, calls the registered function.
 
 Extensions can update these pointers during the init procedure
